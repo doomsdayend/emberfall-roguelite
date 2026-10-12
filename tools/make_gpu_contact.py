@@ -12,6 +12,6 @@ for index, name in enumerate(names):
     assert frame.size == (1280, 720)
     sheet.paste(frame.resize((640, 360)), (x, y + 20))
     draw.text((x + 10, y + 4), name.upper() + " | Intel Graphics / OpenGL / 1280x720 source", fill="#e9dcc4")
-out = root / "docs/testing/evidence/stage02-gpu-contact.png"
+out = root / "docs/testing/evidence/stage02-dev2-gpu-contact.png"
 sheet.save(out)
 print(out)

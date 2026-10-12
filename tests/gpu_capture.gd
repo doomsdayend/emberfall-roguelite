@@ -63,6 +63,8 @@ func capture_all() -> void:
 func capture(label: String) -> void:
 	game.update_hud()
 	game.queue_redraw()
+	for actor in game.actors.get_children():
+		actor.visual.queue_redraw()
 	await process_frame
 	await process_frame
 	RenderingServer.force_draw(false)

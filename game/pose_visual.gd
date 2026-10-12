@@ -11,7 +11,7 @@ func set_pose(pose: String, duration: float) -> void:
 	override_remaining = duration
 	queue_redraw()
 
-func _process(dt: float) -> void:
+func advance(dt: float) -> void:
 	var actor = get_parent()
 	if actor.get("frozen") != true:
 		clock += dt

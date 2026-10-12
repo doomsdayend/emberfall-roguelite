@@ -12,6 +12,7 @@ var invulnerability := 0.0
 var locked_facing := -1.0
 var hit_done := false
 var frozen := false
+var visual: Node2D
 
 func _ready() -> void:
 	collision_layer = 8
@@ -23,7 +24,8 @@ func _ready() -> void:
 	collider.shape = shape
 	collider.position.y = -45
 	add_child(collider)
-	add_child(preload("res://game/pose_visual.gd").new())
+	visual = preload("res://game/pose_visual.gd").new()
+	add_child(visual)
 	if elite:
 		hp = 160
 
@@ -84,6 +86,7 @@ func tick(dt: float, player: Node2D) -> void:
 	else:
 		velocity.x = 0
 	move_and_slide()
+	visual.advance(dt)
 
 func hurt_rect() -> Rect2:
 	return Rect2(global_position + Vector2(-22, -90), Vector2(44, 90))

@@ -1,0 +1,4 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+OpenGL API 3.3.0 - Build 32.0.101.6881 - Compatibility - Using Device: Intel - Intel(R) Graphics
+
+GPU_CAPTURE_RESULT={"captures":["title","settings","refuge","birth","start","stop","turn","land","interact","windup","active","recovery","dodge","pause","death","victory"],"display":"Windows","gpu":"Intel(R) Graphics","main_window_minimized":true,"passed":true,"performance_tested":false,"size":"1280x720"}

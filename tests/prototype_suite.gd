@@ -32,6 +32,7 @@ func run(game: Node) -> void:
 	await test_combat()
 	await test_enemy()
 	await test_pause()
+	await test_preferences_and_pose()
 	await test_flow()
 	await test_combat_flows()
 	var result := {"suite": "fixed-room-prototype", "passed": failures.is_empty(), "checks": checks,
@@ -246,6 +247,43 @@ func test_flow() -> void:
 		check(world.mode == "win", "final gate opens victory")
 		world.show_menu("title")
 		check(world.mode == "title", "victory returns title")
+
+func test_preferences_and_pose() -> void:
+	var Store = preload("res://game/settings_store.gd")
+	var store := Store.new()
+	store.path = "user://automated-tests/preferences-regression.cfg"
+	store.volume = 0.6
+	store.shake_enabled = false
+	check(store.save_values() == OK, "settings first atomic save")
+	var restored := Store.new()
+	restored.path = store.path
+	restored.load_values()
+	check(is_equal_approx(restored.volume, 0.6) and not restored.shake_enabled, "settings survive a fresh store instance")
+	store.volume = 0.2
+	check(store.save_values() == OK, "settings replace existing file on Windows")
+	restored.load_values()
+	check(is_equal_approx(restored.volume, 0.2), "replacement settings loaded")
+	var config := ConfigFile.new()
+	config.set_value("meta", "schema", 1)
+	config.set_value("audio", "volume", 999)
+	config.set_value("display", "shake", "invalid")
+	config.save(store.path)
+	restored.load_values()
+	check(restored.volume == 1 and restored.shake_enabled, "invalid preferences clamp or use defaults")
+	config.set_value("meta", "schema", 999)
+	config.save(store.path)
+	restored.load_values()
+	check(is_equal_approx(restored.volume, 0.35) and restored.shake_enabled, "unknown preference schema uses defaults")
+	check(world.UI_FONT.has_char("烬".unicode_at(0)) and world.UI_FONT.has_char("暂".unicode_at(0)), "bundled font supports Chinese UI")
+	await reset()
+	world.player.position.y = 610
+	world.player.velocity.y = 300
+	await frames(6)
+	check(world.player.visual.pose_override == "land" and world.player.visual.override_remaining > 0, "physics retains landing pose across render gaps")
+	var clock: float = world.player.visual.clock
+	world.show_menu("pause")
+	await frames(30)
+	check(world.player.visual.clock == clock, "pause freezes pose clock")
 
 func test_combat_flows() -> void:
 	for run_index in 10:

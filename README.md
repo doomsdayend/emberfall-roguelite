@@ -1,6 +1,6 @@
 # Emberfall · 余烬之路
 
-从零开发的 Windows 横版 2D 动作肉鸽。阶段 1 预制作门槛已通过，阶段 2 已有固定房间开发候选 **0.1.0-dev.1（未发布）**。
+从零开发的 Windows 横版 2D 动作肉鸽。阶段 1 预制作门槛已通过，阶段 2 已有固定房间开发候选 **0.1.0-dev.2（未发布）**。
 
 - [有效需求修订](docs/requirements/windows-amendment.md)
 - [游戏设计](docs/design/gdd.md)
@@ -29,7 +29,7 @@ pwsh -File tools/validate.ps1 -Godot 'C:\tools\Godot_v4.6.3-stable_win64_console
 
 ## 阶段 2 开发候选
 
-[阶段报告](docs/stages/02-action-prototype.md) · [动作参数](docs/design/prototype-actions.md) · [自动测试](docs/testing/stage-02-prototype.md) · [操作/人工检查](docs/testing/prototype-playtest.md)。普通启动进入标题；美术是表达动作的程序占位，正式手绘角色尚未制作。
+[阶段报告](docs/stages/02-action-prototype.md) · [动作参数](docs/design/prototype-actions.md) · [自动测试](docs/testing/stage-02-dev2.md) · [操作/人工检查](docs/testing/prototype-playtest.md)。普通启动进入标题；美术是表达动作的程序占位，正式手绘角色尚未制作。
 
 ```powershell
 pwsh -File tools/validate-prototype.ps1 -Godot 'C:\tools\Godot_v4.6.3-stable_win64_console.exe' -WindowsTemplate 'C:\templates\windows_release_x86_64.exe'

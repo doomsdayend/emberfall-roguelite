@@ -41,6 +41,7 @@ func tick(dt: float, cmd: Dictionary, enemies: Array) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, Data.BRAKE * dt)
 		velocity.y += Data.GRAVITY * dt
 		move_and_slide()
+		visual.advance(dt)
 		queue_redraw()
 		return
 	invulnerability = maxf(0, invulnerability - dt)
@@ -105,6 +106,7 @@ func tick(dt: float, cmd: Dictionary, enemies: Array) -> void:
 		state = "land"
 		action_event.emit("land", attack_instance)
 	queue_redraw()
+	visual.advance(dt)
 
 func start_attack(index: int) -> void:
 	state = "attack"
@@ -158,6 +160,7 @@ func take_damage(amount: int, knock: float) -> bool:
 	invulnerability = 0.50
 	velocity.x = knock
 	action_event.emit(state, attack_instance)
+	visual.queue_redraw()
 	return true
 
 func clear_buffers() -> void:

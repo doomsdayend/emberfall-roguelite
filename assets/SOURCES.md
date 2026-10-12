@@ -11,13 +11,23 @@
 | ../output/imagegen/camera-scale-review-v01.png | Pillow离线组合既有生成图 | tools/make_art_preview.py | 1280×720概念审核板，非实机截图 |
 | ../output/imagegen/silhouette-scale-review-v01.png | Pillow提取缩放既有概念剪影 | tools/make_art_preview.py | 1280×720确定尺寸剪影比较 |
 
-没有恢复旧仓库资产；没有下载其他游戏素材。生成图不宣称独占版权或已完成人工分层；正式使用前需来源与商用授权复核。正式角色动画、音频、字体尚未引入，需逐项登记后使用。用户提供的接口地址和密钥不保存进公开仓库。
+没有恢复旧仓库资产；没有下载其他游戏素材。生成图不宣称独占版权或已完成人工分层；正式使用前需来源与商用授权复核。正式角色动画和音频尚未引入，需逐项登记后使用。用户提供的接口地址和密钥不保存进公开仓库。
 
+| 资产 | 作者/来源 | 用途/许可 | 状态 |
+| --- | --- | --- | --- |
 | ../output/imagegen/emberblade-model-v04.png | imagegen CLI gpt-image-2，动作v02+模型v03参考编辑 | prompt-model-final.txt | 阶段1冻结概念 |
 | ../output/imagegen/emberblade-action-keys-v02.png | imagegen CLI gpt-image-2，模型v03+动作v01参考编辑 | prompt-poses-refine.txt | 修正起跳/翻滚与比例的11姿势 |
 | ../output/imagegen/*review-v02.png、model-proportion-review-v01.png | Pillow离线组合/人工标记既有图 | tools/make_art_preview.py | 尺寸/剪影/比例审核，非GPU截图 |
 | source/emberblade-rig-spec.json | 本次原创16骨骼/8挂点坐标规范 | 源码同许可 | 技术绑定，非最终分层皮肤 |
 
+| 资产 | 作者/来源 | 用途/许可 | 状态 |
+| --- | --- | --- | --- |
 | game/pose_visual.gd 程序姿态与场景绘制 | 本次原创代码，无第三方贴图 | 阶段2动作占位，不属于最终手绘 | 已记录GPU离屏审核 |
 | game/prototype.gd 合成命中短音 | 本次正弦波/衰减生成 | 原型音效，无外部采样 | 听感待真人确认 |
-| Godot4.6.3及内置回退字体 | 官方引擎二进制内置 | 官方MIT及第三方声明见docs/licenses | 随本地包复制；未新增第三方字体 |
+| Godot4.6.3及内置回退字体 | 官方引擎二进制内置 | 官方MIT及第三方声明见docs/licenses | 引擎声明随本地包复制 |
+
+## 中文字体（dev.2）
+
+Noto Sans SC变量字体：Google Fonts官方分发，Copyright 2014–2021 Adobe，SIL Open Font License 1.1。来源：[官方目录](https://github.com/google/fonts/tree/main/ofl/notosanssc)，原文件NotoSansSC[wght].ttf完整保存为assets/fonts/NotoSansSC.ttf，未修改字体内容。许可见docs/licenses/NotoSansSC-OFL.txt，随开发包复制。
+
+17,772,300字节；SHA256：A3041811A78C361B1DE50F953C805E0244951C21C5BD412F7232EF0D899AF0DA。

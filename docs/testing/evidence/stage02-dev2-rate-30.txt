@@ -1,0 +1,4 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+OpenGL API 3.3.0 - Build 32.0.101.6881 - Compatibility - Using Device: Intel - Intel(R) Graphics
+
+GPU_RATE_RESULT={"attack_events":[{"event":"startup","instance":1,"tick":330},{"event":"active","instance":1,"tick":339},{"event":"recover","instance":1,"tick":366}],"distance_1s":446.000305175781,"frame_interval_p95_ms":44.471,"frames":104,"gpu":"Intel(R) Graphics","human_playtested":false,"jump_height":205.480895996094,"main_window_minimized":true,"observed_frames_per_second":30.4669321000476,"passed":true,"requested_max_fps":30}

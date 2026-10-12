@@ -2,7 +2,9 @@ extends Node2D
 const Fighter = preload("res://game/fighter.gd")
 const Enemy = preload("res://game/enemy.gd")
 const Router = preload("res://game/input_router.gd")
-const ROOMS := ["Refuge", "Training", "Foundry I", "Foundry II", "The Warden"]
+const ROOMS := ["避难所", "训练场", "铸坊一层", "铸坊二层", "守门者"]
+const UI_FONT = preload("res://assets/fonts/NotoSansSC.ttf")
+const Settings = preload("res://game/settings_store.gd")
 var mode := "title"
 var room := 0
 var player: CharacterBody2D
@@ -27,9 +29,16 @@ var physics_steps := 0
 var completed_runs := 0
 var test_mode := false
 var pending_command: Dictionary = {}
+var settings := Settings.new()
+var settings_status := ""
 
 func _ready() -> void:
 	test_mode = "--prototype-test" in OS.get_cmdline_user_args()
+	if test_mode or "--gpu-test" in OS.get_cmdline_user_args():
+		settings.path = "user://automated-tests/test-preferences.cfg"
+	settings.load_values()
+	volume = settings.volume
+	shake_enabled = settings.shake_enabled
 	geometry = Node2D.new()
 	add_child(geometry)
 	actors = Node2D.new()
@@ -51,11 +60,15 @@ func build_ui() -> void:
 	hud = Label.new()
 	hud.position = Vector2(32, 22)
 	hud.add_theme_font_size_override("font_size", 21)
+	hud.add_theme_font_override("font", UI_FONT)
 	ui.add_child(hud)
 	panel = VBoxContainer.new()
 	panel.position = Vector2(420, 170)
 	panel.custom_minimum_size = Vector2(440, 380)
 	panel.add_theme_constant_override("separation", 16)
+	var theme := Theme.new()
+	theme.default_font = UI_FONT
+	panel.theme = theme
 	ui.add_child(panel)
 
 func button(text: String, callback: Callable) -> void:
@@ -83,32 +96,35 @@ func show_menu(next: String) -> void:
 		child.queue_free()
 	panel.show()
 	var title := Label.new()
-	title.text = "EMBERFALL  /  0.1.0-dev.1\n" + {"title": "Fixed-room action prototype", "pause": "Paused", "settings": "Settings", "win": "The Warden has fallen", "death": "Embers fade"}.get(next, next)
+	title.text = "余烬之路  /  0.1.0-dev.2\n" + {"title": "固定房间动作原型", "pause": "已暂停", "settings": "设置", "win": "守门者已被击败", "death": "余烬熄灭"}.get(next, next)
 	title.add_theme_font_size_override("font_size", 27)
 	panel.add_child(title)
 	if next == "title":
-		button("Begin in the Refuge", start_run)
-		button("Settings", func(): show_menu("settings"))
-		button("Quit", func(): get_tree().quit())
+		button("从避难所出发", start_run)
+		button("设置", func(): show_menu("settings"))
+		button("退出游戏", func(): get_tree().quit())
 	elif next == "settings":
-		button("Screen shake: " + ("ON" if shake_enabled else "OFF"), func(): shake_enabled = not shake_enabled; show_menu("settings"))
+		button("屏幕震动：" + ("开" if shake_enabled else "关"), func(): shake_enabled = not shake_enabled; save_settings(); show_menu("settings"))
 		var slider := HSlider.new()
 		var volume_label := Label.new()
-		volume_label.text = "Hit sound volume"
+		volume_label.text = "命中音效音量"
 		panel.add_child(volume_label)
 		slider.max_value = 1
 		slider.step = 0.05
 		slider.value = volume
-		slider.value_changed.connect(func(value): volume = value)
+		var status := Label.new()
+		slider.value_changed.connect(func(value): volume = value; save_settings(); status.text = settings_status)
 		panel.add_child(slider)
-		button("Back to title", func(): show_menu("title"))
+		button("返回标题", func(): show_menu("title"))
+		status.text = settings_status
+		panel.add_child(status)
 	elif next == "pause":
-		button("Resume", resume)
-		button("Restart room", func(): load_room(room, 100); resume())
-		button("Return to title", func(): show_menu("title"))
+		button("继续游戏", resume)
+		button("重新开始本房间", func(): load_room(room, 100); resume())
+		button("返回标题", func(): show_menu("title"))
 	else:
-		button("Begin another run", start_run)
-		button("Return to title", func(): show_menu("title"))
+		button("再次出发", start_run)
+		button("返回标题", func(): show_menu("title"))
 	update_hud()
 
 func start_run() -> void:
@@ -310,9 +326,9 @@ func play_tone(frequency: float) -> void:
 			playback.push_frame(Vector2(sample, sample))
 
 func update_hud() -> void:
-	hud.text = "EMBERFALL  ·  FIXED-ROOM DEVELOPMENT PROTOTYPE"
+	hud.text = "余烬之路 · 固定房间开发原型 0.1.0-dev.2"
 	if is_instance_valid(player) and mode not in ["title", "settings"]:
-		hud.text += "\n%s  |  HP %d  |  Dodge %.2fs\nA/D Move  ·  Space Jump  ·  S+Space Drop  ·  J Attack  ·  K Heavy  ·  Shift Dodge  ·  E Gate  ·  Esc Pause" % [ROOMS[room], player.hp, player.dodge_cooldown]
+		hud.text += "\n%s  |  生命 %d  |  闪避冷却 %.2f 秒\nA/D 移动 · 空格 跳跃 · S+空格 下穿 · J 普攻 · K 重击 · Shift 闪避 · E 交互 · Esc 暂停" % [ROOMS[room], player.hp, player.dodge_cooldown]
 		if debug_view:
 			hud.text += "\n%s  t=%.3f  instance=%d\n%s" % [player.state, player.timer, player.attack_instance, str(event_log)]
 
@@ -329,7 +345,7 @@ func _draw() -> void:
 	if is_instance_valid(player) and mode not in ["title", "settings"]:
 		var unlocked := room_clear()
 		draw_arc(Vector2(1190, 566), 47, -PI, PI, 32, Color("e3b76b") if unlocked else Color("725848"), 5)
-		draw_string(ThemeDB.fallback_font, Vector2(1130, 508), "E: EXIT" if unlocked else "DEFEAT ALL", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("e5d9c5"))
+		draw_string(UI_FONT, Vector2(1125, 508), "E：前往出口" if unlocked else "击败所有敌人", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("e5d9c5"))
 	for shot in projectiles:
 		draw_line(shot.position, shot.position + Vector2(-shot.direction * 18, 0), Color("ffae71"), 4)
 	for spark in sparks:
@@ -341,3 +357,8 @@ func run_tests() -> void:
 	var suite := preload("res://tests/prototype_suite.gd").new()
 	add_child(suite)
 	await suite.run(self)
+
+func save_settings() -> void:
+	settings.volume = volume
+	settings.shake_enabled = shake_enabled
+	settings_status = "设置已保存" if settings.save_values() == OK else "设置保存失败，请检查目录权限"

@@ -11,16 +11,16 @@ try {
     $sha = git rev-parse HEAD
     & (Join-Path $PSScriptRoot 'validate-prototype.ps1') -Godot $Godot -WindowsTemplate $WindowsTemplate
     if ($LASTEXITCODE -ne 0) { throw 'Validation failed' }
-    $stage = Join-Path $root 'builds\emberfall-0.1.0-dev.1-windows-x64'
+    $stage = Join-Path $root 'builds\emberfall-0.1.0-dev.2-windows-x64'
     New-Item -ItemType Directory -Force $stage | Out-Null
     $built = Join-Path $root 'builds\windows\测试 空格'
     foreach ($extension in @('exe','pck')) {
-        Copy-Item -LiteralPath (Join-Path $built ('emberfall-0.1.0-dev.1.' + $extension)) -Destination $stage -Force
+        Copy-Item -LiteralPath (Join-Path $built ('emberfall-0.1.0-dev.2.' + $extension)) -Destination $stage -Force
     }
     Copy-Item -LiteralPath (Join-Path $root 'docs\testing\prototype-playtest.md') -Destination (Join-Path $stage 'READ-ME.md') -Force
     Copy-Item -LiteralPath (Join-Path $root 'docs\licenses') -Destination $stage -Recurse -Force
     $metadata = [ordered]@{
-        version = '0.1.0-dev.1'
+        version = '0.1.0-dev.2'
         source_commit = $sha
         built_utc = [DateTime]::UtcNow.ToString('o')
         engine = 'Godot 4.6.3.stable.official.7d41c59c4'

@@ -1,4 +1,5 @@
 * text=auto
+*.ttf binary
 *.gd text eol=lf
 *.tscn text eol=lf
 *.godot text eol=lf
