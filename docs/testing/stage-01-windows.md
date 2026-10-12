@@ -21,6 +21,7 @@ pwsh -NoProfile -File tools/validate.ps1 -Godot .tools/godot/Godot_v4.6.3-stable
 | headless编辑器导入 | 退出0，无SCRIPT ERROR/ERROR | artifacts/import.log |
 | SVG纹理载入与尺寸 | Texture2D非空，64×64 | artifacts/source-probe.log |
 | AnimationPlayer轨道 | 0.15s时x=15、0.30s时x=30 | 同上，failures=[] |
+| 骨骼/事件回归 | 16骨骼、8挂点、5头身、100次回位/无拉伸，100个事件；源码与导出包一致 | source-probe.log / exported-probe.log |
 | Windows release导出 | exe+pck导出成功，无错误 | artifacts/export.log |
 | 中文空格路径独立包启动 | builds/windows/测试 空格/emberfall-probe.exe --headless；退出0，全部断言通过 | artifacts/exported-probe.log |
 | 无弹窗 | 全部Godot使用headless，导出程序用隐藏进程并等候日志 | tools/validate.ps1 |
@@ -28,7 +29,7 @@ pwsh -NoProfile -File tools/validate.ps1 -Godot .tools/godot/Godot_v4.6.3-stable
 导出包日志：
 
 ```json
-{"display":"headless","engine":"4.6.3-stable (official)","failures":[],"os":"Windows","passed":true,"playable":false,"probe":"windows-preproduction-1","visual_quality_tested":false}
+{"display":"headless","engine":"4.6.3-stable (official)","failures":[],"method_events":100,"os":"Windows","passed":true,"playable":false,"probe":"windows-preproduction-2","rig_transition_cycles":100,"visual_quality_tested":false}
 ```
 
 本地构建 SHA-256：
@@ -36,7 +37,7 @@ pwsh -NoProfile -File tools/validate.ps1 -Godot .tools/godot/Godot_v4.6.3-stable
 | 文件 | SHA-256 |
 | --- | --- |
 | emberfall-probe.exe | 91724f15024a3a545e28ccd83134403d31ce2323a38e51c95e4dfa282f732ab6 |
-| emberfall-probe.pck | 585e5ffd7d6e3eb014555a6b9398acc012dc9ad1a122a4f0bd058398972fd8d9 |
+| emberfall-probe.pck | 621ffc984170e64ce5b86ce09a941852b157f8deaa9fe3d5a6d556f2ffb79717 |
 
 原始机器日志和二进制保留在本地忽略目录，公开仓库仅保存该脱敏测试摘要。此包没有可玩流程，不发布为v0.1.0，不创建Release。
 
@@ -45,3 +46,5 @@ pwsh -NoProfile -File tools/validate.ps1 -Godot .tools/godot/Godot_v4.6.3-stable
 第一次沙箱导入无法写标准Godot配置目录，改用正常权限运行后通过；未更改用户安全设置。最初PowerShell直接调用GUI子系统exe无法可靠等待/捕获输出，验证器已改为隐藏进程、60秒超时、独立日志和退出码校验，再导出重跑通过。
 
 未验证：干净虚拟机、最低档硬件、真实GPU离屏截图/灯光、GPU帧率、声音、手柄、人物动作质量、碰撞/战斗和手感。默认headless是dummy渲染，不能把本记录当成这些项目的通过证据。角色生成API的默认地址曾返回401；用户随后指定兼容接口，图像结果另见美术审核记录。
+
+新增回归发现显式资源导出遗漏character_rig.gd；已将脚本及JSON绑定规范纳入导出，再完整运行验证器，源码与独立包均退出0、无错误。

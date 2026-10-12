@@ -1,6 +1,6 @@
 # Emberfall · 余烬之路
 
-从零开发的 Windows 横版 2D 动作肉鸽。当前为阶段 1 预制作，**没有可玩版本**。
+从零开发的 Windows 横版 2D 动作肉鸽。阶段 1 预制作门槛已通过，正在开发阶段 2 动作原型，**没有可玩版本**。
 
 - [有效需求修订](docs/requirements/windows-amendment.md)
 - [游戏设计](docs/design/gdd.md)

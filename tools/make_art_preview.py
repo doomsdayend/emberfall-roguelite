@@ -4,10 +4,10 @@ from PIL import Image, ImageOps, ImageDraw
 
 root = Path(__file__).resolve().parents[1]
 art = root / "output" / "imagegen"
-model = Image.open(art / "emberblade-model-v03.png").convert("RGB")
+model = Image.open(art / "emberblade-model-v04.png").convert("RGB")
 regions = Image.open(art / "regions-concept-v01.png").convert("RGB")
 # Side reference occupies this region in the reviewed 1536x1024 sheet.
-hero = model.crop((155, 120, 395, 925))
+hero = model.crop((166, 122, 394, 828))
 hero = hero.resize((round(hero.width * 112 / hero.height), 112), Image.Resampling.LANCZOS)
 board = Image.new("RGB", (1280, 720), "#20252e")
 draw = ImageDraw.Draw(board)
@@ -23,11 +23,11 @@ for index, title in enumerate(("FOUNDRY", "GALLERY", "SANCTUM")):
     board.paste(hero, (75, y + 65))
     draw.text((28, y + 8), title + " | HERO 112px", fill="#eadfc8")
     draw.line((28, y + 178, 205, y + 178), fill="#ad9471")
-out = art / "camera-scale-review-v01.png"
+out = art / "camera-scale-review-v02.png"
 board.save(out)
 print(out)
 
-keys_path = art / "emberblade-action-keys-v01.png"
+keys_path = art / "emberblade-action-keys-v02.png"
 if keys_path.exists():
     keys = Image.open(keys_path).convert("RGB")
     silhouettes = Image.new("RGB", (1280, 720), "#e9e2d4")
@@ -36,10 +36,10 @@ if keys_path.exists():
     baseline = 560
     sd.line((60, baseline, 1220, baseline), fill="#80745e", width=2)
     for box, height, x, label in (
-        ((216, 803, 356, 950), 112, 160, "EMBERBLADE 112px"),
-        ((450, 780, 750, 950), 108, 410, "PURSUER 108px"),
-        ((790, 777, 935, 950), 120, 670, "ARCHER 120px"),
-        ((980, 734, 1340, 950), 260, 1000, "GUARDIAN 260px"),
+        ((242, 813, 341, 947), 112, 160, "EMBERBLADE 112px"),
+        ((460, 778, 710, 947), 108, 410, "PURSUER 108px"),
+        ((788, 777, 917, 947), 120, 670, "ARCHER 120px"),
+        ((983, 735, 1358, 947), 260, 1000, "GUARDIAN 260px"),
     ):
         piece = keys.crop(box)
         alpha = piece.convert("L").point(lambda p: 255 if p < 150 else 0)
@@ -51,6 +51,24 @@ if keys_path.exists():
         ink = Image.new("RGB", alpha.size, "#282c35")
         silhouettes.paste(ink, (x - alpha.width // 2, baseline - height), alpha)
         sd.text((x - 80, baseline + 28), label, fill="#282c35")
-    out = art / "silhouette-scale-review-v01.png"
+    out = art / "silhouette-scale-review-v02.png"
     silhouettes.save(out)
     print(out)
+
+# Human-reviewed landmarks, not OCR of a generated ruler. Raster concepts may
+# deviate slightly; the runtime rig's exact five-head contract is independent.
+measurements = Image.new("RGB", (1536, 1090), "#eee5d5")
+measurements.paste(model, (0, 0))
+md = ImageDraw.Draw(measurements)
+for x, top, chin, sole, label in (
+    (402, 122, 255, 828, "SIDE"),
+    (726, 124, 264, 828, "FRONT"),
+    (1018, 135, 273, 828, "BACK (ESTIMATED)"),
+):
+    ratio = (sole - top) / (chin - top)
+    md.line((x, top, x, sole), fill="#df3a31", width=2)
+    for y in (top, chin, sole):
+        md.line((x - 12, y, x + 12, y), fill="#df3a31", width=2)
+    md.text((30 + (0 if x == 402 else 470 if x == 726 else 970), 1045),
+            f"{label}: {sole-top}px / {chin-top}px = {ratio:.2f} heads", fill="#282c35")
+measurements.save(art / "model-proportion-review-v01.png")

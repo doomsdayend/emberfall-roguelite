@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "character": "emberblade",
+  "purpose": "preproduction skeleton contract, not finished character art",
+  "visual_height": 112.0,
+  "head_height": 22.4,
+  "collision_height": 96.0,
+  "collision_width": 32.0,
+  "origin": "foot baseline center",
+  "bones": [
+    {"id":"pelvis","parent":"","position":[0,-48],"length":14},
+    {"id":"torso","parent":"pelvis","position":[0,-14],"length":27},
+    {"id":"neck","parent":"torso","position":[0,-27],"length":0.6},
+    {"id":"head","parent":"neck","position":[0,-0.6],"length":22.4},
+    {"id":"arm_back","parent":"torso","position":[-15,-16],"length":16},
+    {"id":"forearm_back","parent":"arm_back","position":[-5,15.2],"length":16},
+    {"id":"hand_back","parent":"forearm_back","position":[2,15.9],"length":6},
+    {"id":"arm_front","parent":"torso","position":[15,-16],"length":16},
+    {"id":"forearm_front","parent":"arm_front","position":[5,15.2],"length":16},
+    {"id":"hand_front","parent":"forearm_front","position":[-2,15.9],"length":6},
+    {"id":"thigh_back","parent":"pelvis","position":[-8,0],"length":24},
+    {"id":"shin_back","parent":"thigh_back","position":[-2,24],"length":24},
+    {"id":"foot_back","parent":"shin_back","position":[0,24],"length":12},
+    {"id":"thigh_front","parent":"pelvis","position":[8,0],"length":24},
+    {"id":"shin_front","parent":"thigh_front","position":[2,24],"length":24},
+    {"id":"foot_front","parent":"shin_front","position":[0,24],"length":12}
+  ],
+  "attachments": [
+    {"id":"hand_main","parent":"hand_front","position":[0,3]},
+    {"id":"hand_off","parent":"hand_back","position":[0,3]},
+    {"id":"weapon_grip","parent":"hand_front","position":[0,3]},
+    {"id":"weapon_tip","parent":"hand_front","position":[67.2,3]},
+    {"id":"muzzle","parent":"hand_front","position":[67.2,3]},
+    {"id":"head","parent":"head","position":[0,-11.2]},
+    {"id":"feet","parent":"pelvis","position":[0,48]},
+    {"id":"hurt_torso","parent":"torso","position":[0,-7]}
+  ],
+  "layers": ["head","neck","torso","pelvis","upper_arm_front","forearm_front","hand_front","upper_arm_back","forearm_back","hand_back","thigh_front","shin_front","foot_front","thigh_back","shin_back","foot_back","hair_front","hair_back","hem","cape","weapon"],
+  "constraints": {"scale": [1,1], "weapon_hand": "front", "final_art_required": true}
+}

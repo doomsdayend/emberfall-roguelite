@@ -12,3 +12,8 @@
 | ../output/imagegen/silhouette-scale-review-v01.png | Pillow提取缩放既有概念剪影 | tools/make_art_preview.py | 1280×720确定尺寸剪影比较 |
 
 没有恢复旧仓库资产；没有下载其他游戏素材。生成图不宣称独占版权或已完成人工分层；正式使用前需来源与商用授权复核。正式角色动画、音频、字体尚未引入，需逐项登记后使用。用户提供的接口地址和密钥不保存进公开仓库。
+
+| ../output/imagegen/emberblade-model-v04.png | imagegen CLI gpt-image-2，动作v02+模型v03参考编辑 | prompt-model-final.txt | 阶段1冻结概念 |
+| ../output/imagegen/emberblade-action-keys-v02.png | imagegen CLI gpt-image-2，模型v03+动作v01参考编辑 | prompt-poses-refine.txt | 修正起跳/翻滚与比例的11姿势 |
+| ../output/imagegen/*review-v02.png、model-proportion-review-v01.png | Pillow离线组合/人工标记既有图 | tools/make_art_preview.py | 尺寸/剪影/比例审核，非GPU截图 |
+| source/emberblade-rig-spec.json | 本次原创16骨骼/8挂点坐标规范 | 源码同许可 | 技术绑定，非最终分层皮肤 |

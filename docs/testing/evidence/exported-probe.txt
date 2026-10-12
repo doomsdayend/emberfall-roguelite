@@ -1,0 +1,3 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PROBE_RESULT={"display":"headless","engine":"4.6.3-stable (official)","failures":[],"method_events":100,"os":"Windows","passed":true,"playable":false,"probe":"windows-preproduction-2","rig_transition_cycles":100,"visual_quality_tested":false}
