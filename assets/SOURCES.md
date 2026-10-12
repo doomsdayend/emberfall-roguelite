@@ -17,3 +17,7 @@
 | ../output/imagegen/emberblade-action-keys-v02.png | imagegen CLI gpt-image-2，模型v03+动作v01参考编辑 | prompt-poses-refine.txt | 修正起跳/翻滚与比例的11姿势 |
 | ../output/imagegen/*review-v02.png、model-proportion-review-v01.png | Pillow离线组合/人工标记既有图 | tools/make_art_preview.py | 尺寸/剪影/比例审核，非GPU截图 |
 | source/emberblade-rig-spec.json | 本次原创16骨骼/8挂点坐标规范 | 源码同许可 | 技术绑定，非最终分层皮肤 |
+
+| game/pose_visual.gd 程序姿态与场景绘制 | 本次原创代码，无第三方贴图 | 阶段2动作占位，不属于最终手绘 | 已记录GPU离屏审核 |
+| game/prototype.gd 合成命中短音 | 本次正弦波/衰减生成 | 原型音效，无外部采样 | 听感待真人确认 |
+| Godot4.6.3及内置回退字体 | 官方引擎二进制内置 | 官方MIT及第三方声明见docs/licenses | 随本地包复制；未新增第三方字体 |

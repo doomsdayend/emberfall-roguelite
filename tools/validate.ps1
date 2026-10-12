@@ -1,12 +1,15 @@
 param(
     [Parameter(Mandatory=$true)][string]$Godot,
-    [string]$WindowsTemplate
+    [string]$WindowsTemplate,
+    [string]$PackageName = 'emberfall-probe'
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
+if ($PackageName -notmatch '^[a-zA-Z0-9._-]+$') { throw 'PackageName must be a simple filename stem' }
 $Godot = (Resolve-Path -LiteralPath $Godot).Path
 $evidence = Join-Path $root 'artifacts'
 New-Item -ItemType Directory -Force $evidence | Out-Null
+New-Item -ItemType File -Force (Join-Path $evidence '.gdignore') | Out-Null
 
 function Invoke-Checked([string]$Executable, [string[]]$Arguments, [string]$LogName) {
     $output = & $Executable @Arguments 2>&1
@@ -29,7 +32,7 @@ if ($WindowsTemplate) {
     $WindowsTemplate = (Resolve-Path -LiteralPath $WindowsTemplate).Path
     $preset = Join-Path $root 'export_presets.cfg'
     $original = [IO.File]::ReadAllText($preset)
-    $target = Join-Path $root 'builds\windows\测试 空格\emberfall-probe.exe'
+    $target = Join-Path $root ('builds\windows\测试 空格\' + $PackageName + '.exe')
     New-Item -ItemType Directory -Force (Split-Path $target -Parent) | Out-Null
     try {
         $changed = $original.Replace('custom_template/release=""', ('custom_template/release="' + $WindowsTemplate.Replace('\','/') + '"'))

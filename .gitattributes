@@ -6,4 +6,7 @@
 *.md text eol=lf
 *.ps1 text eol=lf
 *.py text eol=lf
+*.json text eol=lf
+*.uid text eol=lf
+*.txt text eol=lf
 *.png binary
