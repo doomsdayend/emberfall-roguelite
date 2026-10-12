@@ -1,8 +1,0 @@
-.godot/
-builds/
-runtime/
-*.log
-*.tmp
-export_credentials.cfg
-.DS_Store
-Thumbs.db
