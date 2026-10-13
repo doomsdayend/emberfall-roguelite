@@ -4,7 +4,7 @@ import json, hashlib
 root=Path(__file__).resolve().parents[1]
 manifest=json.loads((root/'assets/source/stage03-art-manifest.json').read_text(encoding='utf-8-sig'))
 assert manifest['stage']=='03-art-slice'
-assert len(manifest['assets'])==2
+assert len(manifest['assets'])==3
 for item in manifest['assets']:
     p=root/item['path']; assert p.exists(), p
     with Image.open(p) as im: assert im.size==(item['width'],item['height']), im.size

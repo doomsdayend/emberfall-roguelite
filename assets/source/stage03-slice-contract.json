@@ -20,5 +20,13 @@
     "gameplay_safe_rect": [0, 420, 1280, 300],
     "must_preserve": ["floor_edge", "platform_edges", "exit_marker_clearance"]
   },
+  "enemy": {
+    "id": "foundry_pursuer",
+    "reference": "stage03-pursuer-sheet-v01.png",
+    "source_status": "reference_pending_layering",
+    "expected_visual_height": 108.0,
+    "required_views": ["front_three_quarter", "side", "back_three_quarter", "club_grip"],
+    "required_states": ["idle", "telegraph", "attack", "recover", "hurt", "death"]
+  },
   "final_gate": {"layered_source": false, "license_reviewed": false, "runtime_integrated": false}
 }

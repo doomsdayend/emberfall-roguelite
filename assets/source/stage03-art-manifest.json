@@ -19,6 +19,15 @@
       "status": "reference_pending_layering",
       "source": "user-authorized imagegen CLI, gpt-image-2",
       "created": "2026-10-13"
+    },
+    {
+      "path": "assets/source/stage03-pursuer-sheet-v01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "eeb1c45bd96083958dd0f4a1337569155e806e0e41d8a616592fa811aa56ce14",
+      "status": "reference_pending_layering",
+      "source": "user-authorized imagegen CLI, gpt-image-2",
+      "created": "2026-10-13"
     }
   ],
   "note": "Generated references are not final layered sprites or game-ready backgrounds until manually separated, licensed, and integrated."

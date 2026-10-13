@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: hand-painted 2D game enemy character source reference for a production art slice
+Primary request: Create a clean hand-painted fantasy character sheet for a close-range pursuer enemy in the same visual world as Emberblade. Show full-body front three-quarter, side, back three-quarter and a readable club grip study.
+Scene/backdrop: flat pale ivory studio background with generous margins; no environment, no UI, no text labels, no watermark
+Subject: adult humanoid foundry pursuer, slightly hunched and broad-shouldered, worn rust-brown leather apron over dark iron armor, heavy gloves, soot-stained hood, blunt iron club; threatening but readable silhouette; no gore
+Style/medium: refined hand-painted 2D production concept art, visible brush texture, crisp silhouette and restrained fantasy materials, suitable as a source reference for separated layers
+Composition/framing: all views fully visible and uncropped, consistent foot baseline and scale; club fully inside canvas; clear negative space
+Lighting/mood: soft neutral studio light, subtle grounded contact shadow, no dramatic effects
+Color palette: charcoal, rust brown, muted iron, bone cloth, small ember amber accents
+Materials/textures: worn leather, hammered iron, soot, rough cloth and chipped wood
+Constraints: enemy should read at roughly Emberblade height in a 1280x720 gameplay scene; preserve consistent anatomy and clothing across views; this is a reference sheet, not final sprites
+Avoid: pixel art, chibi proportions, giant head, extra enemies, extra weapons, logos, captions, letters, numbers, watermark, cropped feet, cropped club, gore
