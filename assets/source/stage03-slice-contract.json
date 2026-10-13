@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "stage": "03-art-slice",
+  "character": {
+    "id": "emberblade",
+    "reference": "stage03-emberblade-sheet-v01.png",
+    "source_status": "reference_pending_layering",
+    "expected_visual_height": 112.0,
+    "expected_head_height": 22.4,
+    "expected_collision": {"width": 32.0, "height": 96.0},
+    "views": ["front", "front_three_quarter", "back_three_quarter", "weapon_grip"],
+    "required_layers": ["head", "neck", "torso", "pelvis", "upper_arm_front", "forearm_front", "hand_front", "upper_arm_back", "forearm_back", "hand_back", "thigh_front", "shin_front", "foot_front", "thigh_back", "shin_back", "foot_back", "hair_front", "hair_back", "hem", "cape", "weapon"],
+    "required_attachments": ["hand_main", "hand_off", "weapon_grip", "weapon_tip", "muzzle", "head", "feet", "hurt_torso"]
+  },
+  "environment": {
+    "id": "foundry_training_ground",
+    "reference": "stage03-training-ground-v01.png",
+    "source_status": "reference_pending_layering",
+    "required_planes": ["far_smoke", "mid_beams", "foreground_floor", "platform_left", "platform_right", "exit_ring"],
+    "gameplay_safe_rect": [0, 420, 1280, 300],
+    "must_preserve": ["floor_edge", "platform_edges", "exit_marker_clearance"]
+  },
+  "final_gate": {"layered_source": false, "license_reviewed": false, "runtime_integrated": false}
+}
