@@ -11,7 +11,8 @@
     "views": ["front", "front_three_quarter", "back_three_quarter", "weapon_grip"],
     "required_layers": ["head", "neck", "torso", "pelvis", "upper_arm_front", "forearm_front", "hand_front", "upper_arm_back", "forearm_back", "hand_back", "thigh_front", "shin_front", "foot_front", "thigh_back", "shin_back", "foot_back", "hair_front", "hair_back", "hem", "cape", "weapon"],
     "required_attachments": ["hand_main", "hand_off", "weapon_grip", "weapon_tip", "muzzle", "head", "feet", "hurt_torso"],
-    "parts_sheet": {"reference": "stage03-emberblade-parts-v01.png", "grid": [5, 5], "status": "slice_candidate_pending_rig_review"}
+    "parts_sheet": {"reference": "stage03-emberblade-parts-v01.png", "grid": [5, 5], "status": "slice_candidate_pending_rig_review"},
+    "skin_manifest": {"reference": "emberblade-skin-v01.json", "parts": 21, "status": "rig_preview_candidate"}
   },
   "environment": {
     "id": "foundry_training_ground",

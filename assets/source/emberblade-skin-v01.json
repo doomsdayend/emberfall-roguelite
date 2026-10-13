@@ -1,0 +1,408 @@
+{
+  "schema": 1,
+  "status": "rig_preview_candidate",
+  "source": "stage03-emberblade-parts-v01.png",
+  "source_sha256": "49dd500f22654154bbae31aa8489593ca97f4d91ba31c62903b6cf3bcccf9c60",
+  "scale_policy": "fixed anatomical lengths; no animated stretching",
+  "parts": [
+    {
+      "id": "head",
+      "source_rect": [
+        16,
+        15,
+        239,
+        245
+      ],
+      "size": [
+        23,
+        22.4
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "texture": "res://assets/exported/emberblade-v01/head.png",
+      "sha256": "6016a334e4998c3824a8b90b65b305e59342fcc7d3c6749eb294d56282b492a8"
+    },
+    {
+      "id": "neck",
+      "source_rect": [
+        330,
+        88,
+        429,
+        197
+      ],
+      "size": [
+        9,
+        10
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "texture": "res://assets/exported/emberblade-v01/neck.png",
+      "sha256": "b8f21ed3afd4febd4130fba1a403266cf0d4f444682324eaae6666b08e62b9dd"
+    },
+    {
+      "id": "torso",
+      "source_rect": [
+        505,
+        23,
+        718,
+        254
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "pivot": [
+        0.5,
+        0.1
+      ],
+      "texture": "res://assets/exported/emberblade-v01/torso.png",
+      "sha256": "72453ca9550807d5d95ac14d7bccd7ee72d42071e7fd67d6aced8edd86278930"
+    },
+    {
+      "id": "pelvis",
+      "source_rect": [
+        755,
+        59,
+        970,
+        253
+      ],
+      "size": [
+        29,
+        18
+      ],
+      "pivot": [
+        0.5,
+        0.4
+      ],
+      "texture": "res://assets/exported/emberblade-v01/pelvis.png",
+      "sha256": "500cb926f3ec8b9dbceddcfcae53a70de093066d9ed527931cc460b8805e2a71"
+    },
+    {
+      "id": "cape",
+      "source_rect": [
+        993,
+        9,
+        1243,
+        268
+      ],
+      "size": [
+        34,
+        39
+      ],
+      "pivot": [
+        0.83,
+        0.08
+      ],
+      "texture": "res://assets/exported/emberblade-v01/cape.png",
+      "sha256": "d6ceedba6c67b9b414fe98859aac181c13b7ad87352f6a40f6dd5c6b27324e96"
+    },
+    {
+      "id": "upper_arm_back",
+      "source_rect": [
+        57,
+        260,
+        184,
+        494
+      ],
+      "size": [
+        11,
+        23
+      ],
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "texture": "res://assets/exported/emberblade-v01/upper_arm_back.png",
+      "sha256": "ff1f0c76b661804865e05e7c6d738a1ae171216b27f57e7b69299720f2ba458e"
+    },
+    {
+      "id": "forearm_back",
+      "source_rect": [
+        321,
+        271,
+        423,
+        496
+      ],
+      "size": [
+        10,
+        22
+      ],
+      "pivot": [
+        0.5,
+        0.12
+      ],
+      "texture": "res://assets/exported/emberblade-v01/forearm_back.png",
+      "sha256": "16a79913678c20b4d3af422beb464a9f7d1dd0bd181aa61cd9b33ede960cfebb"
+    },
+    {
+      "id": "hand_back",
+      "source_rect": [
+        573,
+        293,
+        656,
+        483
+      ],
+      "size": [
+        7,
+        11
+      ],
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "texture": "res://assets/exported/emberblade-v01/hand_back.png",
+      "sha256": "3dc397064ea6d567c993801b5cb119898a439446ca01f6ac698ce41a1e840fc0"
+    },
+    {
+      "id": "upper_arm_front",
+      "source_rect": [
+        805,
+        263,
+        916,
+        493
+      ],
+      "size": [
+        12,
+        23
+      ],
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "texture": "res://assets/exported/emberblade-v01/upper_arm_front.png",
+      "sha256": "79ae7926cdfef620046f0483cf42c067c02e85c8a138f4c25bd8830df6d3642f"
+    },
+    {
+      "id": "forearm_front",
+      "source_rect": [
+        1055,
+        263,
+        1157,
+        496
+      ],
+      "size": [
+        11,
+        22
+      ],
+      "pivot": [
+        0.5,
+        0.12
+      ],
+      "texture": "res://assets/exported/emberblade-v01/forearm_front.png",
+      "sha256": "5dbf7192dbefe0e532623798e415b38b412a65986804febb522883f9b901596f"
+    },
+    {
+      "id": "hand_front",
+      "source_rect": [
+        63,
+        527,
+        180,
+        720
+      ],
+      "size": [
+        8,
+        11
+      ],
+      "pivot": [
+        0.5,
+        0.15
+      ],
+      "texture": "res://assets/exported/emberblade-v01/hand_front.png",
+      "sha256": "5acce2674580406daf589faa97562680917c13e0ab394ccfc712b77f8169e5fe"
+    },
+    {
+      "id": "thigh_back",
+      "source_rect": [
+        309,
+        496,
+        437,
+        742
+      ],
+      "size": [
+        14,
+        29
+      ],
+      "pivot": [
+        0.5,
+        0.13
+      ],
+      "texture": "res://assets/exported/emberblade-v01/thigh_back.png",
+      "sha256": "8ac345d1e4580cb14f6437e619484e6538648d6a7603297f1ca83bb39e645ec6"
+    },
+    {
+      "id": "shin_back",
+      "source_rect": [
+        558,
+        496,
+        667,
+        742
+      ],
+      "size": [
+        12,
+        29
+      ],
+      "pivot": [
+        0.5,
+        0.12
+      ],
+      "texture": "res://assets/exported/emberblade-v01/shin_back.png",
+      "sha256": "ec4583c3b6bc94911a78e6e3800321e1d4e87d57ba66068bf459103780343d47"
+    },
+    {
+      "id": "foot_back",
+      "source_rect": [
+        773,
+        548,
+        968,
+        734
+      ],
+      "size": [
+        20,
+        15
+      ],
+      "pivot": [
+        0.32,
+        0.35
+      ],
+      "texture": "res://assets/exported/emberblade-v01/foot_back.png",
+      "sha256": "5051e506af9baecd929609e78c33a3aa7cbe4084c1c0e7b61cdb11ca41631951"
+    },
+    {
+      "id": "thigh_front",
+      "source_rect": [
+        1040,
+        498,
+        1173,
+        742
+      ],
+      "size": [
+        15,
+        29
+      ],
+      "pivot": [
+        0.5,
+        0.13
+      ],
+      "texture": "res://assets/exported/emberblade-v01/thigh_front.png",
+      "sha256": "cad44a15acfe58aaa5a41a1194ef7c25f3aa6adf437a81ca162b3304a3923c9a"
+    },
+    {
+      "id": "shin_front",
+      "source_rect": [
+        60,
+        733,
+        177,
+        976
+      ],
+      "size": [
+        13,
+        29
+      ],
+      "pivot": [
+        0.5,
+        0.12
+      ],
+      "texture": "res://assets/exported/emberblade-v01/shin_front.png",
+      "sha256": "97a664825ae4ae8876ebe41293a2289dfc9a76f73c2af96b09af8b80be3858fc"
+    },
+    {
+      "id": "foot_front",
+      "source_rect": [
+        284,
+        777,
+        472,
+        970
+      ],
+      "size": [
+        21,
+        15
+      ],
+      "pivot": [
+        0.32,
+        0.35
+      ],
+      "texture": "res://assets/exported/emberblade-v01/foot_front.png",
+      "sha256": "d39bf2aeb57cbecb5a4ff7338e9ee05231a6d3a3dcba2b53cd58fcbd866921d1"
+    },
+    {
+      "id": "hair_front",
+      "source_rect": [
+        505,
+        764,
+        720,
+        979
+      ],
+      "size": [
+        22,
+        21
+      ],
+      "pivot": [
+        0.5,
+        0.4
+      ],
+      "texture": "res://assets/exported/emberblade-v01/hair_front.png",
+      "sha256": "4b3d5759f0c2b2ea03377014fbe16e0eb22e9fd33e82b7e68b0444032d7c88b3"
+    },
+    {
+      "id": "hair_back",
+      "source_rect": [
+        752,
+        762,
+        971,
+        981
+      ],
+      "size": [
+        22,
+        21
+      ],
+      "pivot": [
+        0.5,
+        0.4
+      ],
+      "texture": "res://assets/exported/emberblade-v01/hair_back.png",
+      "sha256": "c01e2a6926c3b8221205ac3e6bac5101eb00eb024a5b53c1269ab6ba06cbe53d"
+    },
+    {
+      "id": "hem",
+      "source_rect": [
+        1015,
+        778,
+        1194,
+        953
+      ],
+      "size": [
+        27,
+        20
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "texture": "res://assets/exported/emberblade-v01/hem.png",
+      "sha256": "1abfda152b418eba45c4675145760bf999c884284568209f1488e09d986daf9d"
+    },
+    {
+      "id": "weapon",
+      "source_rect": [
+        64,
+        984,
+        192,
+        1256
+      ],
+      "size": [
+        21,
+        77
+      ],
+      "pivot": [
+        0.5,
+        0.84
+      ],
+      "texture": "res://assets/exported/emberblade-v01/weapon.png",
+      "sha256": "b588f2ed822849651266a1ace005c8976967d3f30392decd0e2404de7ef58a38"
+    }
+  ]
+}

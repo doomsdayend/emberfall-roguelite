@@ -22,3 +22,5 @@
 三张参考稿已组成审核板 [stage03-reference-review.png](../testing/evidence/stage03-reference-review.png)；训练场图叠加了 1280×300 的玩法安全区域，帮助后续切片保留地面、平台和出口净空。审核板只用于设计检查，不会被游戏加载。
 
 烬刃另有一张 RGBA 部件图集候选（5×5布局），已通过透明通道和契约检查；当前仍需逐格裁切、统一像素尺度、挂接 16 骨骼并做实机动作验证。
+
+部件图集已离线裁成 21 个 RGBA 层，记录在 `assets/source/emberblade-skin-v01.json`，审核预览为 `assets/exported/emberblade-v01/parts-review.png`。裁切保持阶段 1 的固定解剖长度，不会改变碰撞体或攻击参数；当前状态为 `rig_preview_candidate`。

@@ -19,6 +19,13 @@ with Image.open(parts_path) as parts_image:
     assert parts_image.mode == "RGBA"
     assert parts_image.getchannel("A").getbbox() is not None
 assert character["parts_sheet"]["grid"] == [5, 5]
+skin = json.loads((root / "assets/source" / character["skin_manifest"]["reference"]).read_text(encoding="utf-8"))
+assert skin["status"] == "rig_preview_candidate"
+assert len(skin["parts"]) == character["skin_manifest"]["parts"] == len(character["required_layers"])
+for part in skin["parts"]:
+    texture = root / part["texture"].replace("res://", "")
+    assert texture.exists(), texture
+    assert hashlib.sha256(texture.read_bytes()).hexdigest() == part["sha256"]
 for entry in (character, contract["environment"], contract["enemy"]):
     path = root / "assets/source" / entry["reference"]
     assert path.exists(), path
