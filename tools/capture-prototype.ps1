@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Godot, [ValidateSet('capture','rate')][string]$Mode = 'capture', [ValidateSet(30,60,120)][int]$Fps = 60)
+param([Parameter(Mandatory=$true)][string]$Godot, [ValidateSet('capture','rate')][string]$Mode = 'capture', [ValidateSet(30,60,120)][int]$Fps = 60, [switch]$ArtSlice)
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
 $Godot = (Resolve-Path -LiteralPath $Godot).Path
@@ -19,6 +19,7 @@ try {
         $marker = 'GPU_RATE_RESULT='
     }
     $arguments += @('--','--gpu-test')
+    if ($ArtSlice) { $arguments += '--art-slice-preview' }
     $process = Start-Process -FilePath $Godot -ArgumentList $arguments -WindowStyle Hidden -PassThru
     if (-not $process.WaitForExit(60000)) { $process.Kill(); throw 'GPU capture timed out' }
     $result = Get-Content -LiteralPath $log -Raw

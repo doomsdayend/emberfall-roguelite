@@ -24,3 +24,5 @@
 烬刃另有一张 RGBA 部件图集候选（5×5布局），已通过透明通道和契约检查；当前仍需逐格裁切、统一像素尺度、挂接 16 骨骼并做实机动作验证。
 
 部件图集已离线裁成 21 个 RGBA 层，记录在 `assets/source/emberblade-skin-v01.json`，审核预览为 `assets/exported/emberblade-v01/parts-review.png`。裁切保持阶段 1 的固定解剖长度，不会改变碰撞体或攻击参数；当前状态为 `rig_preview_candidate`。
+
+皮肤预览通过显式 `--art-slice-preview` 接入现有 `pose_visual`，普通原型默认不启用。源码动作回归保持 256 项通过；真实 Intel Graphics/OpenGL 最小化窗口离屏捕获 16 个姿态全部通过，审核拼板见 [stage03-art-slice-gpu-contact.png](../testing/evidence/stage03-art-slice-gpu-contact.png)。这证明资源能在现有场景中加载和随状态更新，不代表最终关节质量或商用美术门槛已通过。

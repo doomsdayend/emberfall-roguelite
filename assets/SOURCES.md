@@ -41,5 +41,6 @@ Noto Sans SC变量字体：Google Fonts官方分发，Copyright 2014–2021 Adob
 | source/stage03-pursuer-sheet-v01.png | 用户授权 imagegen CLI，gpt-image-2；提示词见 docs/design/prompt-stage03-pursuer-sheet.txt | 阶段 3 近战追击者视觉与分层重绘参考；正式使用前需来源与商用许可复核 | 参考稿，未分层、未绑定 |
 | source/stage03-emberblade-parts-v01.png | 用户授权 imagegen CLI 编辑参考稿；提示词见 docs/design/prompt-stage03-emberblade-parts.txt | 阶段 3 部件图集候选，5×5布局，供挂点与关节审核 | RGBA候选，待逐格裁切、尺度校准和骨骼实机检查 |
 | source/emberblade-skin-v01.json、exported/emberblade-v01/*.png | 本次由部件图集离线裁切；tools/build_emberblade_skin.py | 21层 RGBA 绑定预览候选和固定锚点记录 | 可编辑预览候选，未完成实机绑定或最终美术验收 |
+| docs/testing/evidence/stage03-art-slice-gpu-contact.png | Windows Intel Graphics/OpenGL 离屏截图拼板；tools/make_stage03_gpu_contact.py | 皮肤预览接入检查 | 验证证据，不是运行时资源 |
 
 尺寸、SHA256及状态见 assets/source/stage03-art-manifest.json。生成图不会直接作为最终游戏资产；阶段 3 仍需人工分层、透明边界、来源复核和离屏接入验收。

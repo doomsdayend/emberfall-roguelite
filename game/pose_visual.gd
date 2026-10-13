@@ -5,6 +5,13 @@ var pose_override := "birth"
 var override_remaining := 0.24
 var previous_state := "idle"
 var previous_facing := 1.0
+var skin_preview: Node2D
+
+func _ready() -> void:
+	var actor = get_parent()
+	if "--art-slice-preview" in OS.get_cmdline_user_args() and actor.get("kind") == null:
+		skin_preview = preload("res://game/skin_preview.gd").new()
+		add_child(skin_preview)
 
 func set_pose(pose: String, duration: float) -> void:
 	pose_override = pose
@@ -26,9 +33,13 @@ func advance(dt: float) -> void:
 			set_pose("turn", 0.10)
 	previous_state = actor.state
 	previous_facing = actor.facing
+	if skin_preview != null:
+		skin_preview.advance(actor.state, actor.timer, actor.facing)
 	queue_redraw()
 
 func _draw() -> void:
+	if skin_preview != null:
+		return
 	var actor = get_parent()
 	var state: String = actor.state
 	if override_remaining > 0 and state not in ["attack", "dodge", "hurt", "death", "rise", "apex", "fall"]:
