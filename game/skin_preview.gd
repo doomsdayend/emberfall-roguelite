@@ -1,69 +1,75 @@
 extends Node2D
-## Candidate art-slice skin. It is opt-in and never replaces the prototype by default.
+## Rigid painted layers follow the shared pose anchors. Gameplay never reads these.
 var parts: Dictionary = {}
-var source_scale := 1.0
-
-const PARTS := {
-	"head": [Vector2(0, -91), Vector2(22.4, 23.0), 0.0, 8],
-	"neck": [Vector2(0, -77), Vector2(9, 10), 0.0, 7],
-	"torso": [Vector2(0, -67), Vector2(32, 32), 0.0, 5],
-	"pelvis": [Vector2(0, -46), Vector2(29, 18), 0.0, 5],
-	"cape": [Vector2(-11, -64), Vector2(34, 39), 0.0, 3],
-	"upper_arm_back": [Vector2(-15, -62), Vector2(11, 23), -0.08, 2],
-	"forearm_back": [Vector2(-18, -45), Vector2(10, 22), -0.05, 2],
-	"hand_back": [Vector2(-19, -31), Vector2(7, 11), 0.0, 2],
-	"upper_arm_front": [Vector2(15, -62), Vector2(12, 23), 0.08, 6],
-	"forearm_front": [Vector2(18, -45), Vector2(11, 22), 0.05, 6],
-	"hand_front": [Vector2(20, -31), Vector2(8, 11), 0.0, 7],
-	"thigh_back": [Vector2(-8, -30), Vector2(14, 29), 0.03, 2],
-	"shin_back": [Vector2(-10, -10), Vector2(12, 29), -0.02, 2],
-	"foot_back": [Vector2(-13, -3), Vector2(20, 15), 0.0, 2],
-	"thigh_front": [Vector2(8, -30), Vector2(15, 29), -0.03, 4],
-	"shin_front": [Vector2(10, -10), Vector2(13, 29), 0.02, 4],
-	"foot_front": [Vector2(13, -3), Vector2(21, 15), 0.0, 4],
-	"hair_front": [Vector2(1, -93), Vector2(22, 21), 0.0, 10],
-	"hair_back": [Vector2(-2, -92), Vector2(22, 21), 0.0, 1],
-	"hem": [Vector2(-1, -38), Vector2(27, 20), 0.0, 3],
-	"weapon": [Vector2(34, -48), Vector2(10, 77), -0.15, 9]
-}
+var sizes: Dictionary = {}
+var pivots: Dictionary = {}
+var joints: Dictionary = {}
+var grip := Vector2.ZERO
+var tip := Vector2.ZERO
+const ORDER := ["hair_back", "cape", "thigh_back", "shin_back", "foot_back", "upper_arm_back", "forearm_back", "hand_back", "pelvis", "hem", "torso", "neck", "head", "thigh_front", "shin_front", "foot_front", "upper_arm_front", "forearm_front", "weapon", "hand_front", "hair_front"]
 
 func _ready() -> void:
-	for name in PARTS:
+	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/source/emberblade-skin-v01.json"))
+	for item in manifest.parts:
 		var sprite := Sprite2D.new()
-		sprite.texture = load("res://assets/exported/emberblade-v01/" + name + ".png")
-		var spec: Array = PARTS[name]
-		sprite.position = spec[0]
-		sprite.rotation = spec[2]
-		sprite.z_index = spec[3]
-		var texture_size := Vector2(sprite.texture.get_size())
-		sprite.scale = Vector2(spec[1]) / texture_size
-		parts[name] = sprite
+		sprite.name = item.id
+		sprite.texture = load(item.texture)
+		assert(sprite.texture != null, "Missing skin texture " + item.id)
+		sprite.centered = false
+		var size := Vector2(item.size[0], item.size[1])
+		var pivot := Vector2(item.pivot[0], item.pivot[1]) * size
+		sizes[item.id] = size
+		pivots[item.id] = pivot
+		# Resampling scale is fixed once. Animation rotates/translates, never stretches.
+		sprite.scale = size / Vector2(sprite.texture.get_size())
+		sprite.offset = -pivot / sprite.scale
+		sprite.z_index = ORDER.find(item.id)
+		parts[item.id] = sprite
 		add_child(sprite)
-	queue_redraw()
+	# The head art already includes hair. Extra hair layers remain editable but hidden.
+	parts.hair_front.hide()
+	parts.hair_back.hide()
 
-func advance(state: String, timer: float, facing: float) -> void:
-	scale.x = facing
-	var weapon: Sprite2D = parts.get("weapon")
-	var front_arm: Sprite2D = parts.get("forearm_front")
-	var hand: Sprite2D = parts.get("hand_front")
-	if state == "attack":
-		var swing := clampf(timer / 0.30, 0.0, 1.0)
-		weapon.position = Vector2(12 + swing * 28, -57 + swing * 22)
-		weapon.rotation = lerpf(-1.8, 0.5, swing)
-		front_arm.rotation = lerpf(0.5, -0.9, swing)
-		hand.position = Vector2(14 + swing * 25, -64 + swing * 22)
-	elif state == "dodge":
-		rotation = sin(timer * 18.0) * 0.18
-		weapon.position = Vector2(18, -43)
-	else:
-		rotation = 0.0
-		weapon.position = Vector2(20, -57)
-		weapon.rotation = -0.15
-		front_arm.rotation = 0.05
-		hand.position = Vector2(20, -31)
-	queue_redraw()
+func place(id: String, point: Vector2, angle: float = 0.0) -> void:
+	parts[id].position = point
+	parts[id].rotation = angle
 
-func _draw() -> void:
-	var actor := get_parent()
-	if actor != null and actor.get("debug_view") == true:
-		draw_rect(Rect2(-16, -96, 32, 96), Color(0.1, 0.9, 1.0, 0.8), false, 1.0)
+func bend(start: Vector2, target: Vector2, first: float, second: float, side: float) -> Array[Vector2]:
+	var delta := target - start
+	var length := clampf(delta.length(), absf(first - second) + 0.01, first + second - 0.01)
+	var direction := delta.normalized() if delta.length() > 0.01 else Vector2.DOWN
+	var along := (first * first - second * second + length * length) / (2 * length)
+	var height := sqrt(maxf(0, first * first - along * along))
+	return [start + direction * along + direction.orthogonal() * height * side, start + direction * length]
+
+func limb(prefix: String, suffix: String, start: Vector2, target: Vector2, first: float, second: float, side: float) -> Vector2:
+	var chain := bend(start, target, first, second, side)
+	place(prefix + suffix, start, (chain[0] - start).angle() - PI / 2)
+	var lower := "forearm" if prefix == "upper_arm" else "shin"
+	place(lower + suffix, chain[0], (chain[1] - chain[0]).angle() - PI / 2)
+	joints[prefix + suffix] = chain[0]
+	return chain[1]
+
+func apply_pose(torso: Vector2, pelvis: Vector2, front_foot: Vector2, rear_foot: Vector2, hand: Vector2, offhand: Vector2, blade_angle: float, body_angle: float, facing: float, clock: float) -> void:
+	if parts.is_empty():
+		return
+	position = Vector2(0, -30)
+	rotation = body_angle
+	scale = Vector2(facing, 1)
+	var lean := (torso - pelvis).angle() + PI / 2
+	place("torso", torso + Vector2(0, -9), lean)
+	place("pelvis", pelvis)
+	place("neck", torso + Vector2(0, -13), lean)
+	place("head", torso + Vector2(1, -10), lean * 0.35)
+	place("cape", torso + Vector2(-11, -10), lean + sin(clock * 6) * 0.08)
+	place("hem", pelvis + Vector2(0, 2), sin(clock * 6) * 0.06)
+	var rear := limb("thigh", "_back", pelvis + Vector2(-6, 2), rear_foot + Vector2(0, -2), 22, 22, -1)
+	var front := limb("thigh", "_front", pelvis + Vector2(6, 2), front_foot + Vector2(0, -2), 22, 22, 1)
+	place("foot_back", rear)
+	place("foot_front", front)
+	var off := limb("upper_arm", "_back", torso + Vector2(-12, -1), offhand, 16, 16, -1)
+	grip = limb("upper_arm", "_front", torso + Vector2(12, -1), hand, 16, 16, 1)
+	place("hand_back", off)
+	place("hand_front", grip)
+	place("weapon", grip, blade_angle + PI / 2)
+	tip = grip + Vector2.from_angle(blade_angle) * (sizes.weapon.y * 0.84)

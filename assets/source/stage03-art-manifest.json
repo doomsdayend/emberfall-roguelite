@@ -48,5 +48,25 @@
       "status": "cutout_pending_cleanup",
       "derived_from": "source reference; chroma-key helper; shadows and layer separation still require review"
     }
+  ],
+  "runtime_candidates": [
+    {
+      "path": "assets/source/stage03-emberblade-parts-v01.png",
+      "width": 1243,
+      "height": 1266,
+      "sha256": "49dd500f22654154bbae31aa8489593ca97f4d91ba31c62903b6cf3bcccf9c60",
+      "status": "rig_preview_candidate",
+      "created": "2026-10-13",
+      "source": "user-authorized imagegen CLI edit, gpt-image-2"
+    },
+    {
+      "path": "assets/exported/foundry-backdrop-v01.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "16933231f70516aa91a4b060e4b7ca23492964837ba2b6593f367b337253250d",
+      "status": "runtime_backdrop_candidate",
+      "created": "2026-10-13",
+      "source": "user-authorized imagegen CLI edit, gpt-image-2"
+    }
   ]
 }

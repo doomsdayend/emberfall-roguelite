@@ -33,6 +33,8 @@ func run(game: Node) -> void:
 	await test_enemy()
 	await test_pause()
 	await test_preferences_and_pose()
+	if world.art_slice_preview:
+		await test_skin_binding()
 	await test_flow()
 	await test_combat_flows()
 	var result := {"suite": "fixed-room-prototype", "passed": failures.is_empty(), "checks": checks,
@@ -41,6 +43,31 @@ func run(game: Node) -> void:
 		"gpu_tested": false, "human_playtested": false, "published": false}
 	print("PROTOTYPE_RESULT=" + JSON.stringify(result))
 	get_tree().quit(0 if failures.is_empty() else 1)
+
+func test_skin_binding() -> void:
+	await reset()
+	var skin = world.player.visual.skin_preview
+	check(skin != null and skin.parts.size() == 21, "21 painted skin layers loaded")
+	var scales := {}
+	for id in skin.parts:
+		scales[id] = skin.parts[id].scale
+	var previous_tip := Vector2.ZERO
+	for cycle in 100:
+		var angle := float(cycle % 10) * 0.30 - 2.0
+		var face := 1.0 if cycle % 2 == 0 else -1.0
+		skin.apply_pose(Vector2(4, -37), Vector2(0, -14), Vector2(20, 26), Vector2(-19, 26), Vector2(28, -23), Vector2(-22, -25), angle, 0.0, face, float(cycle) / 120)
+		check(skin.parts.weapon.position.is_equal_approx(skin.parts.hand_front.position), "weapon grip remains at front hand")
+		check(is_equal_approx(skin.scale.x, face) and skin.scale.y == 1.0, "skin mirrors without changing size")
+		var stable := true
+		for id in scales:
+			stable = stable and skin.parts[id].scale.is_equal_approx(scales[id])
+		check(stable, "rig rotations never stretch painted limbs")
+		if cycle > 0:
+			check(not skin.tip.is_equal_approx(previous_tip), "weapon tip follows changing angle")
+		previous_tip = skin.tip
+	var chain: Array = skin.bend(Vector2.ZERO, Vector2(100, 0), 16, 16, 1)
+	check(is_equal_approx(chain[0].length(), 16) and is_equal_approx(chain[0].distance_to(chain[1]), 16), "unreachable hand target keeps fixed arm lengths")
+	check(world.player.body_shape.shape.height == 96 and world.player.body_shape.shape.radius == 16, "skin keeps original collision capsule")
 
 func test_motion() -> void:
 	for sample_hz in [30, 60, 120]:

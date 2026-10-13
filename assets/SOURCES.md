@@ -38,6 +38,7 @@ Noto Sans SC变量字体：Google Fonts官方分发，Copyright 2014–2021 Adob
 | --- | --- | --- | --- |
 | source/stage03-emberblade-sheet-v01.png | 用户授权 imagegen CLI，gpt-image-2；提示词见 docs/design/prompt-stage03-emberblade-sheet.txt | 阶段 3 烬刃视觉与分层重绘参考；正式使用前需来源与商用许可复核 | 参考稿，未分层、未绑定 |
 | source/stage03-training-ground-v01.png | 用户授权 imagegen CLI，gpt-image-2；提示词见 docs/design/prompt-stage03-training-ground.txt | 阶段 3 训练场构图与材质参考；正式使用前需来源与商用许可复核 | 参考稿，未切片、未接入 |
+| exported/foundry-backdrop-v01.png | imagegen CLI，gpt-image-2 编辑训练场参考；提示词见 docs/design/prompt-stage03-foundry-backdrop.txt | 移除会误导碰撞的平台、出口和前景地面，保留纯远景 | 已接入显式预览；未完成多层场景或最终美术验收 |
 | source/stage03-pursuer-sheet-v01.png | 用户授权 imagegen CLI，gpt-image-2；提示词见 docs/design/prompt-stage03-pursuer-sheet.txt | 阶段 3 近战追击者视觉与分层重绘参考；正式使用前需来源与商用许可复核 | 参考稿，未分层、未绑定 |
 | source/stage03-emberblade-parts-v01.png | 用户授权 imagegen CLI 编辑参考稿；提示词见 docs/design/prompt-stage03-emberblade-parts.txt | 阶段 3 部件图集候选，5×5布局，供挂点与关节审核 | RGBA候选，待逐格裁切、尺度校准和骨骼实机检查 |
 | source/emberblade-skin-v01.json、exported/emberblade-v01/*.png | 本次由部件图集离线裁切；tools/build_emberblade_skin.py | 21层 RGBA 绑定预览候选和固定锚点记录 | 可编辑预览候选，未完成实机绑定或最终美术验收 |

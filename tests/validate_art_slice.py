@@ -20,5 +20,10 @@ for item in manifest['derived']:
         assert im.getchannel('A').getbbox() is not None
     assert hashlib.sha256(p.read_bytes()).hexdigest() == item['sha256']
     assert item['status'] == 'cutout_pending_cleanup'
-print('ART_SLICE_REFERENCE_RESULT='+json.dumps({'passed':True,'assets':len(manifest['assets']),'sizes':[(x['width'],x['height']) for x in manifest['assets']],'layered':False,'licensed_for_final':False},ensure_ascii=False))
+for item in manifest.get('runtime_candidates', []):
+    p = root / item['path']
+    with Image.open(p) as im:
+        assert im.size == (item['width'], item['height'])
+    assert hashlib.sha256(p.read_bytes()).hexdigest() == item['sha256']
+print('ART_SLICE_REFERENCE_RESULT='+json.dumps({'passed':True,'assets':len(manifest['assets']),'runtime_candidates':len(manifest.get('runtime_candidates', [])),'sizes':[(x['width'],x['height']) for x in manifest['assets']],'final_art_accepted':False,'licensed_for_final':False},ensure_ascii=False))
 

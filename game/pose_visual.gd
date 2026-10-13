@@ -33,13 +33,9 @@ func advance(dt: float) -> void:
 			set_pose("turn", 0.10)
 	previous_state = actor.state
 	previous_facing = actor.facing
-	if skin_preview != null:
-		skin_preview.advance(actor.state, actor.timer, actor.facing)
 	queue_redraw()
 
 func _draw() -> void:
-	if skin_preview != null:
-		return
 	var actor = get_parent()
 	var state: String = actor.state
 	if override_remaining > 0 and state not in ["attack", "dodge", "hurt", "death", "rise", "apex", "fall"]:
@@ -152,6 +148,9 @@ func _draw() -> void:
 	rear_foot += offset
 	hand += offset
 	offhand += offset
+	if skin_preview != null:
+		skin_preview.apply_pose(torso, pelvis, front_foot, rear_foot, hand, offhand, blade_angle, body_angle, facing, clock)
+		return
 	# Separate limbs bend at knees/elbows; no static box standing in for motion.
 	limb(pelvis, (pelvis + rear_foot) * 0.5 + Vector2(-8, -2), rear_foot, tint.darkened(0.25), 10)
 	limb(torso + Vector2(-8, 2), offhand + Vector2(-5, -9), offhand, tint.darkened(0.2), 8)

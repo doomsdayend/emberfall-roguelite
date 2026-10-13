@@ -28,6 +28,14 @@ func capture_all() -> void:
 	await capture("settings")
 	game.start_run()
 	await capture("refuge")
+	game.player.state = "run"
+	game.player.visual.override_remaining = 0
+	game.player.visual.clock = 0.08
+	await capture("run")
+	for state in ["rise", "apex", "fall", "hurt"]:
+		game.player.state = state
+		await capture(state)
+	game.player.state = "idle"
 	for pose in ["birth", "start", "stop", "turn", "land", "interact"]:
 		game.player.visual.set_pose(pose, 0.10 if pose != "birth" else 0.24)
 		await capture(pose)
@@ -41,6 +49,12 @@ func capture_all() -> void:
 	await capture("active")
 	game.player.timer = 0.24
 	await capture("recovery")
+	game.player.start_attack(3)
+	game.player.timer = 0.30
+	await capture("heavy")
+	game.player.facing = -1
+	await capture("heavy_left")
+	game.player.facing = 1
 	game.player.state = "dodge"
 	game.player.timer = 0.12
 	await capture("dodge")
@@ -69,8 +83,9 @@ func capture(label: String) -> void:
 	await process_frame
 	RenderingServer.force_draw(false)
 	var screenshot := viewport.get_texture().get_image()
-	var path := "res://artifacts/gpu/" + label + ".png"
-	DirAccess.make_dir_recursive_absolute("res://artifacts/gpu")
+	var directory := "res://artifacts/gpu-art-slice" if game.art_slice_preview else "res://artifacts/gpu"
+	var path := directory + "/" + label + ".png"
+	DirAccess.make_dir_recursive_absolute(directory)
 	if screenshot == null or screenshot.is_empty() or screenshot.get_size() != Vector2i(1280, 720):
 		failed = true
 	elif screenshot.save_png(path) != OK:

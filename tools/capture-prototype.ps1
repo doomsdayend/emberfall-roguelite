@@ -5,6 +5,7 @@ $Godot = (Resolve-Path -LiteralPath $Godot).Path
 $project = Join-Path $root 'project.godot'
 $original = [IO.File]::ReadAllText($project)
 $log = Join-Path $root $(if ($Mode -eq 'capture') { 'artifacts\gpu-capture.log' } else { "artifacts\gpu-rate-$Fps.log" })
+if ($ArtSlice) { $log = Join-Path $root $(if ($Mode -eq 'capture') { 'artifacts\gpu-art-slice.log' } else { "artifacts\gpu-art-slice-rate-$Fps.log" }) }
 New-Item -ItemType Directory -Force (Join-Path $root 'artifacts') | Out-Null
 New-Item -ItemType File -Force (Join-Path $root 'artifacts\.gdignore') | Out-Null
 try {

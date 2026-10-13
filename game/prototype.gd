@@ -31,14 +31,24 @@ var test_mode := false
 var pending_command: Dictionary = {}
 var settings := Settings.new()
 var settings_status := ""
+var art_slice_preview := false
 
 func _ready() -> void:
 	test_mode = "--prototype-test" in OS.get_cmdline_user_args()
+	art_slice_preview = "--art-slice-preview" in OS.get_cmdline_user_args()
 	if test_mode or "--gpu-test" in OS.get_cmdline_user_args():
 		settings.path = "user://automated-tests/test-preferences.cfg"
 	settings.load_values()
 	volume = settings.volume
 	shake_enabled = settings.shake_enabled
+	if art_slice_preview:
+		var background := Sprite2D.new()
+		background.texture = preload("res://assets/exported/foundry-backdrop-v01.png")
+		background.position = Vector2(640, 360)
+		background.scale = Vector2(1280.0 / background.texture.get_width(), 720.0 / background.texture.get_height())
+		background.modulate = Color(0.72, 0.72, 0.72, 1.0)
+		background.z_index = -10
+		add_child(background)
 	geometry = Node2D.new()
 	add_child(geometry)
 	actors = Node2D.new()
@@ -57,6 +67,13 @@ func _ready() -> void:
 func build_ui() -> void:
 	ui = CanvasLayer.new()
 	add_child(ui)
+	if art_slice_preview:
+		var hud_backing := ColorRect.new()
+		hud_backing.position = Vector2(20, 15)
+		hud_backing.size = Vector2(900, 112)
+		hud_backing.color = Color(0.06, 0.08, 0.11, 0.84)
+		hud_backing.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		ui.add_child(hud_backing)
 	hud = Label.new()
 	hud.position = Vector2(32, 22)
 	hud.add_theme_font_size_override("font_size", 21)
@@ -333,9 +350,10 @@ func update_hud() -> void:
 			hud.text += "\n%s  t=%.3f  instance=%d\n%s" % [player.state, player.timer, player.attack_instance, str(event_log)]
 
 func _draw() -> void:
-	draw_rect(Rect2(0, 0, 1280, 720), Color("171c26"))
-	for i in 10:
-		draw_rect(Rect2(i * 150 - 20, 100 + (i % 3) * 30, 34, 520), Color("222a35"))
+	if not art_slice_preview:
+		draw_rect(Rect2(0, 0, 1280, 720), Color("171c26"))
+		for i in 10:
+			draw_rect(Rect2(i * 150 - 20, 100 + (i % 3) * 30, 34, 520), Color("222a35"))
 	draw_rect(Rect2(0, 620, 1280, 100), Color("3f4249"))
 	draw_line(Vector2(0, 620), Vector2(1280, 620), Color("b8a788"), 3)
 	for rect in [Rect2(380, 440, 230, 18), Rect2(710, 340, 190, 18)]:
