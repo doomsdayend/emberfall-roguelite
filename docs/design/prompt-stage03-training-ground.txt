@@ -1,0 +1,11 @@
+Use case: stylized-concept
+Asset type: hand-painted 2D game environment source reference for a production art slice
+Primary request: Create a side-scrolling training ground inside an abandoned iron foundry for a dark fantasy action roguelite. Show a readable gameplay lane at 1280x720 with a broad stone floor, two simple one-way platforms, a warm forge glow, distant vertical beams and a copper-ring exit marker.
+Scene/backdrop: abandoned forge interior, layered background with distant smoke stacks and middle-distance beams, clear foreground combat lane; no characters, no UI, no text
+Style/medium: refined hand-painted 2D environment concept, visible brush texture, clean silhouettes and restrained details suitable for a parallax game background
+Composition/framing: wide 16:9 side view, floor across the bottom, platforms clearly separated, negative space for a player and enemies, exit ring on the far right
+Lighting/mood: warm forge light against cool charcoal shadows, readable silhouettes, no bloom covering the platforms
+Color palette: rust iron, charcoal stone, muted blue-gray, ember amber and bone highlights
+Materials/textures: worn stone, riveted iron, soot, cracked masonry, copper trim
+Constraints: preserve clear collision-readable floor and platform edges; keep the background darker than gameplay actors; no extra characters, no logos, no captions, no watermark
+Avoid: photorealism, pixel art, cluttered foreground, illegible platforms, giant props blocking the lane, text, UI

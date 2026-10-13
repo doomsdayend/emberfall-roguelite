@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: hand-painted 2D game character source reference for a production art slice
+Primary request: Create a clean hand-painted fantasy character sheet for Emberblade, the compact adult melee protagonist in a side-scrolling action roguelite. Show a full-body neutral standing view, front three-quarter, back three-quarter, and a separate short sword grip study on one pale ivory studio sheet.
+Scene/backdrop: flat pale ivory studio background with generous margins; no environment, no UI, no text labels, no watermark
+Subject: short black hair, adult face, compact five-head-tall anatomy, sturdy torso, short rust-red shoulder cape, ivory shirt, blue-gray armor, dark trousers, bone and copper accents, right-hand short sword; match the established Emberblade identity and proportions
+Style/medium: refined hand-painted 2D production concept art, visible brush texture, crisp readable silhouette, restrained fantasy materials, suitable as a source reference for separated layers
+Composition/framing: all views fully visible and uncropped, consistent foot baseline and scale; sword fully inside the canvas; clear negative space between views
+Lighting/mood: soft neutral studio light, subtle grounded contact shadow, no dramatic effects
+Color palette: charcoal hair, bone ivory, rust red, blue-gray, ember amber, dark neutral trousers
+Materials/textures: painted cloth, worn leather, brushed dark metal, small warm ember accents
+Constraints: keep the character adult and compact; preserve a 112px visual-height to 22.4px head-height proportion when later measured; keep anatomy and clothing consistent across views; this is a reference sheet, not final sprites
+Avoid: pixel art, chibi proportions, seven-head anatomy, giant head, extra weapons, extra characters, logos, captions, letters, numbers, watermark, cropped feet, cropped sword

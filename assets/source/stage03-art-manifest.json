@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "stage": "03-art-slice",
+  "assets": [
+    {
+      "path": "assets/source/stage03-emberblade-sheet-v01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "625b4af04e59dc345c4b75233eb226719d74912b8339c505fb5be8d05a1bc0fd",
+      "status": "reference_pending_layering",
+      "source": "user-authorized imagegen CLI, gpt-image-2",
+      "created": "2026-10-13"
+    },
+    {
+      "path": "assets/source/stage03-training-ground-v01.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "a0c64da029f2c3147ac690df3c486b1df8a1eaf57a10fd12361cc00f2308d3e6",
+      "status": "reference_pending_layering",
+      "source": "user-authorized imagegen CLI, gpt-image-2",
+      "created": "2026-10-13"
+    }
+  ],
+  "note": "Generated references are not final layered sprites or game-ready backgrounds until manually separated, licensed, and integrated."
+}

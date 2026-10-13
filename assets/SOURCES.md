@@ -31,3 +31,12 @@
 Noto Sans SC变量字体：Google Fonts官方分发，Copyright 2014–2021 Adobe，SIL Open Font License 1.1。来源：[官方目录](https://github.com/google/fonts/tree/main/ofl/notosanssc)，原文件NotoSansSC[wght].ttf完整保存为assets/fonts/NotoSansSC.ttf，未修改字体内容。许可见docs/licenses/NotoSansSC-OFL.txt，随开发包复制。
 
 17,772,300字节；SHA256：A3041811A78C361B1DE50F953C805E0244951C21C5BD412F7232EF0D899AF0DA。
+
+## 阶段 3 美术切片参考（2026-10-13）
+
+| 资产 | 作者/来源 | 用途/许可 | 状态 |
+| --- | --- | --- | --- |
+| source/stage03-emberblade-sheet-v01.png | 用户授权 imagegen CLI，gpt-image-2；提示词见 docs/design/prompt-stage03-emberblade-sheet.txt | 阶段 3 烬刃视觉与分层重绘参考；正式使用前需来源与商用许可复核 | 参考稿，未分层、未绑定 |
+| source/stage03-training-ground-v01.png | 用户授权 imagegen CLI，gpt-image-2；提示词见 docs/design/prompt-stage03-training-ground.txt | 阶段 3 训练场构图与材质参考；正式使用前需来源与商用许可复核 | 参考稿，未切片、未接入 |
+
+尺寸、SHA256及状态见 assets/source/stage03-art-manifest.json。生成图不会直接作为最终游戏资产；阶段 3 仍需人工分层、透明边界、来源复核和离屏接入验收。
