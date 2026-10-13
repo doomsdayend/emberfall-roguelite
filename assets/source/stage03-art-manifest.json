@@ -30,5 +30,23 @@
       "created": "2026-10-13"
     }
   ],
-  "note": "Generated references are not final layered sprites or game-ready backgrounds until manually separated, licensed, and integrated."
+  "note": "Generated references are not final layered sprites or game-ready backgrounds until manually separated, licensed, and integrated.",
+  "derived": [
+    {
+      "path": "assets/exported/stage03-emberblade-sheet-v01-cutout.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "68d354d2f58e619bb9a4bea2a30df05c13ec2f8ca8794d18c460463ec8c3d781",
+      "status": "cutout_pending_cleanup",
+      "derived_from": "source reference; chroma-key helper; shadows and layer separation still require review"
+    },
+    {
+      "path": "assets/exported/stage03-pursuer-sheet-v01-cutout.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "31309b9523e1805ed737714efd387538ffd9aefbbfd02d5eb412921cdb5af0d1",
+      "status": "cutout_pending_cleanup",
+      "derived_from": "source reference; chroma-key helper; shadows and layer separation still require review"
+    }
+  ]
 }

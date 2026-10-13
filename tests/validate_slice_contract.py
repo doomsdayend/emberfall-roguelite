@@ -14,6 +14,11 @@ assert character["expected_collision"]["width"] == rig["collision_width"]
 assert character["expected_collision"]["height"] == rig["collision_height"]
 assert character["required_layers"] == rig["layers"]
 assert character["required_attachments"] == [item["id"] for item in rig["attachments"]]
+parts_path = root / "assets/source" / character["parts_sheet"]["reference"]
+with Image.open(parts_path) as parts_image:
+    assert parts_image.mode == "RGBA"
+    assert parts_image.getchannel("A").getbbox() is not None
+assert character["parts_sheet"]["grid"] == [5, 5]
 for entry in (character, contract["environment"], contract["enemy"]):
     path = root / "assets/source" / entry["reference"]
     assert path.exists(), path
@@ -21,4 +26,4 @@ for entry in (character, contract["environment"], contract["enemy"]):
         assert image.width >= 1280 and image.height >= 720
     assert hashlib.sha256(path.read_bytes()).hexdigest()
 assert contract["final_gate"] == {"layered_source": False, "license_reviewed": False, "runtime_integrated": False}
-print("ART_SLICE_CONTRACT_RESULT=" + json.dumps({"passed": True, "bones": len(rig["bones"]), "layers": len(character["required_layers"]), "attachments": len(character["required_attachments"]), "enemy_states": len(contract["enemy"]["required_states"]), "final_gate": contract["final_gate"]}))
+print("ART_SLICE_CONTRACT_RESULT=" + json.dumps({"passed": True, "bones": len(rig["bones"]), "layers": len(character["required_layers"]), "attachments": len(character["required_attachments"]), "parts_grid": character["parts_sheet"]["grid"], "enemy_states": len(contract["enemy"]["required_states"]), "final_gate": contract["final_gate"]}))
