@@ -44,7 +44,11 @@ func capture_all() -> void:
 	var pursuer = game.enemies[0]
 	pursuer.state = "telegraph"
 	pursuer.timer = 0.20
+	pursuer.visual.override_remaining = 0
+	pursuer.facing = 1
 	await capture("pursuer_telegraph")
+	pursuer.facing = -1
+	await capture("pursuer_telegraph_left")
 	pursuer.state = "attack"
 	pursuer.timer = 0.08
 	await capture("pursuer_attack")
@@ -54,6 +58,10 @@ func capture_all() -> void:
 	pursuer.state = "death"
 	pursuer.timer = 0.22
 	await capture("pursuer_death")
+	pursuer.timer = 0.50
+	await capture("pursuer_death_settled")
+	pursuer.state = "idle"
+	pursuer.timer = 0
 	game.player.position = Vector2(570, 620)
 	game.player.start_attack(0)
 	game.player.timer = 0.03
@@ -92,6 +100,8 @@ func capture(label: String) -> void:
 	game.queue_redraw()
 	for actor in game.actors.get_children():
 		actor.visual.queue_redraw()
+	# Preview children must exist and receive the state before framebuffer capture.
+	await process_frame
 	await process_frame
 	await process_frame
 	RenderingServer.force_draw(false)

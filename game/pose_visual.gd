@@ -9,7 +9,7 @@ var skin_preview: Node2D
 
 func _ready() -> void:
 	if "--art-slice-preview" in OS.get_cmdline_user_args():
-		call_deferred("_setup_skin_preview")
+		_setup_skin_preview()
 
 func _setup_skin_preview() -> void:
 	var actor = get_parent()

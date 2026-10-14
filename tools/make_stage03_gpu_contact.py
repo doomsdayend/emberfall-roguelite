@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 root = Path(__file__).resolve().parents[1]
-names = ["refuge", "run", "rise", "land", "windup", "active", "recovery", "heavy", "heavy_left", "dodge", "hurt", "death", "victory"]
+names = ["refuge", "run", "rise", "land", "windup", "active", "recovery", "heavy", "heavy_left", "dodge", "hurt", "death", "victory", "pursuer_telegraph", "pursuer_telegraph_left", "pursuer_attack", "pursuer_hurt", "pursuer_death", "pursuer_death_settled"]
 sheet = Image.new("RGB", (1920, ((len(names) + 2) // 3) * 380), "#171c26")
 draw = ImageDraw.Draw(sheet)
 for index, name in enumerate(names):

@@ -35,6 +35,7 @@ func run(game: Node) -> void:
 	await test_preferences_and_pose()
 	if world.art_slice_preview:
 		await test_skin_binding()
+		await test_enemy_skin_readability()
 	await test_flow()
 	await test_combat_flows()
 	var result := {"suite": "fixed-room-prototype", "passed": failures.is_empty(), "checks": checks,
@@ -68,6 +69,33 @@ func test_skin_binding() -> void:
 	var chain: Array = skin.bend(Vector2.ZERO, Vector2(100, 0), 16, 16, 1)
 	check(is_equal_approx(chain[0].length(), 16) and is_equal_approx(chain[0].distance_to(chain[1]), 16), "unreachable hand target keeps fixed arm lengths")
 	check(world.player.body_shape.shape.height == 96 and world.player.body_shape.shape.radius == 16, "skin keeps original collision capsule")
+
+func test_enemy_skin_readability() -> void:
+	await reset(2)
+	var enemy = world.enemies[0]
+	var preview = enemy.visual.skin_preview
+	check(preview != null, "pursuer preview loads during room creation")
+	var sprite: Sprite2D = preview.sprite
+	var bounds := sprite.get_rect()
+	for face in [1.0, -1.0]:
+		preview.apply_pose("idle", face, 0.0, true)
+		var left: Vector2 = sprite.transform * bounds.position
+		var right: Vector2 = sprite.transform * (bounds.position + Vector2(bounds.size.x, 0))
+		check(is_equal_approx(left.x + right.x, 0.0), "mirrored enemy remains centered on collider")
+		check(is_equal_approx(absf(sprite.scale.y) * bounds.size.y, 108.0), "enemy retains visual height")
+		preview.apply_pose("telegraph", face, 0.20, true)
+		check(preview.warning_visible, "telegraph marker survives skin replacement in either direction")
+		preview.apply_pose("death", face, 0.50, false)
+		check(not preview.warning_visible, "dead enemy hides warning")
+		var above_floor := true
+		for point in [bounds.position, bounds.position + Vector2(bounds.size.x, 0), bounds.end, bounds.position + Vector2(0, bounds.size.y)]:
+			above_floor = above_floor and (sprite.transform * point).y <= 0.01
+		check(above_floor, "settled enemy sprite stays above floor in either direction")
+	preview.apply_pose("hurt", 1.0, 0.05, true)
+	check(not preview.warning_visible, "hurt interrupt hides warning")
+	var capsule: CapsuleShape2D = enemy.get_child(0).shape
+	check(capsule.radius == 18 and capsule.height == 90, "enemy art retains existing collision capsule")
+	check(world.enemies[1].visual.skin_preview == null, "archer keeps its procedural visual")
 
 func test_motion() -> void:
 	for sample_hz in [30, 60, 120]:
