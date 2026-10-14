@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "stage": "03-art-slice",
+  "area": {"id": "foundry", "name": "铸坊一层", "room_count": 8},
+  "enemies": [
+    {"id": "foundry_pursuer", "role": "melee", "telegraph_ms": 550, "recovery_ms": 700, "preview": "foundry-pursuer-v01.png"},
+    {"id": "foundry_marksman", "role": "projectile", "telegraph_ms": 550, "recovery_ms": 700, "preview": "stage03-pursuer-sheet-v01.png"},
+    {"id": "foundry_dasher", "role": "displacement", "telegraph_ms": 420, "recovery_ms": 620, "preview": "stage03-pursuer-sheet-v01.png"}
+  ],
+  "elite": {"id": "foundry_bulwark", "base": "foundry_pursuer", "hp": 160, "role": "armored_melee", "unique_behavior": "guarded_lunge"},
+  "boss": {
+    "id": "kilnwarden",
+    "phases": 2,
+    "attacks": [
+      {"id": "hammer_arc", "range": 150, "telegraph_ms": 620, "active_ms": 180, "recovery_ms": 720, "counter": "jump_or_dodge"},
+      {"id": "slag_line", "range": 900, "telegraph_ms": 780, "active_ms": 140, "recovery_ms": 620, "counter": "jump"},
+      {"id": "foundry_charge", "range": 620, "telegraph_ms": 520, "active_ms": 260, "recovery_ms": 840, "counter": "dodge_through"}
+    ],
+    "phase_two_changes": ["shorter_telegraph", "alternating_slag_line", "charge_chain_limit_2"]
+  },
+  "rooms": [
+    {"id": "refuge", "kind": "safe", "spawn": [], "exit": "training"},
+    {"id": "training", "kind": "training", "spawn": ["foundry_pursuer"], "exit": "gauntlet_a"},
+    {"id": "gauntlet_a", "kind": "combat", "spawn": ["foundry_pursuer", "foundry_marksman"], "exit": "slag_bridge"},
+    {"id": "slag_bridge", "kind": "combat", "spawn": ["foundry_dasher", "foundry_marksman"], "exit": "reward_a"},
+    {"id": "reward_a", "kind": "reward", "spawn": [], "exit": "elite_gate"},
+    {"id": "elite_gate", "kind": "elite", "spawn": ["foundry_bulwark"], "exit": "kiln_approach"},
+    {"id": "kiln_approach", "kind": "combat", "spawn": ["foundry_dasher", "foundry_pursuer", "foundry_marksman"], "exit": "kilnwarden"},
+    {"id": "kilnwarden", "kind": "boss", "spawn": ["kilnwarden"], "exit": "victory"}
+  ],
+  "boons": [
+    {"id": "heated_edge", "effect": "attack_damage_plus_4", "route": "melee_combo"},
+    {"id": "ash_step", "effect": "dodge_cooldown_minus_10pct", "route": "dodge_trigger"},
+    {"id": "slag_needle", "effect": "heavy_attack_spawns_projectile", "route": "projectile_control"},
+    {"id": "smelter_heart", "effect": "max_health_plus_12", "route": "survival"}
+  ]
+}
