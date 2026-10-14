@@ -37,6 +37,7 @@ func run(game: Node) -> void:
 		await test_skin_binding()
 		await test_enemy_skin_readability()
 		test_player_pose_keys()
+		await test_ambience()
 	await test_flow()
 	await test_combat_flows()
 	var result := {"suite": "fixed-room-prototype", "passed": failures.is_empty(), "checks": checks,
@@ -45,6 +46,19 @@ func run(game: Node) -> void:
 		"gpu_tested": false, "human_playtested": false, "published": false}
 	print("PROTOTYPE_RESULT=" + JSON.stringify(result))
 	get_tree().quit(0 if failures.is_empty() else 1)
+
+func test_ambience() -> void:
+	await reset()
+	var before: Vector2 = world.ambience.ember_position(0)
+	await frames(24)
+	check(not before.is_equal_approx(world.ambience.ember_position(0)), "background embers animate during play")
+	world.show_menu("pause")
+	var paused: float = world.ambience.elapsed
+	await frames(24)
+	check(world.ambience.elapsed == paused, "pause freezes ambient time")
+	world.resume()
+	await frames(2)
+	check(world.ambience.elapsed > paused, "resume continues background animation")
 
 func test_skin_binding() -> void:
 	await reset()

@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Godot, [ValidateSet('capture','rate')][string]$Mode = 'capture', [ValidateSet(30,60,120)][int]$Fps = 60, [switch]$ArtSlice, [switch]$Stage3)
+param([Parameter(Mandatory=$true)][string]$Godot, [ValidateSet('capture','rate')][string]$Mode = 'capture', [ValidateSet(30,60,120)][int]$Fps = 60, [switch]$ArtSlice, [switch]$Stage3, [switch]$Ambient)
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
 $Godot = (Resolve-Path -LiteralPath $Godot).Path
@@ -7,6 +7,7 @@ $original = [IO.File]::ReadAllText($project)
 $log = Join-Path $root $(if ($Mode -eq 'capture') { 'artifacts\gpu-capture.log' } else { "artifacts\gpu-rate-$Fps.log" })
 if ($ArtSlice) { $log = Join-Path $root $(if ($Mode -eq 'capture') { 'artifacts\gpu-art-slice.log' } else { "artifacts\gpu-art-slice-rate-$Fps.log" }) }
 if ($Stage3) { $log = Join-Path $root 'artifacts\gpu-stage3.log' }
+if ($Ambient) { $log = Join-Path $root 'artifacts\gpu-ambient.log' }
 New-Item -ItemType Directory -Force (Join-Path $root 'artifacts') | Out-Null
 New-Item -ItemType File -Force (Join-Path $root 'artifacts\.gdignore') | Out-Null
 try {
@@ -24,6 +25,7 @@ try {
     $arguments += @('--','--gpu-test')
     if ($ArtSlice) { $arguments += '--art-slice-preview' }
     if ($Stage3) { $arguments += '--stage3-slice' }
+    if ($Ambient) { $arguments += '--ambient-capture' }
     $process = Start-Process -FilePath $Godot -ArgumentList $arguments -WindowStyle Hidden -PassThru
     if (-not $process.WaitForExit(60000)) { $process.Kill(); throw 'GPU capture timed out' }
     $result = Get-Content -LiteralPath $log -Raw

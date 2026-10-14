@@ -34,6 +34,7 @@ var settings_status := ""
 var art_slice_preview := false
 var stage3_slice := false
 var boon_id := ""
+var ambience: Node2D
 
 func _ready() -> void:
 	test_mode = "--prototype-test" in OS.get_cmdline_user_args()
@@ -52,6 +53,9 @@ func _ready() -> void:
 		background.modulate = Color(0.72, 0.72, 0.72, 1.0)
 		background.z_index = -10
 		add_child(background)
+		ambience = preload("res://game/foundry_ambience.gd").new()
+		ambience.z_index = -5
+		add_child(ambience)
 	geometry = Node2D.new()
 	add_child(geometry)
 	actors = Node2D.new()
@@ -272,6 +276,8 @@ func tick(dt: float, command: Dictionary) -> void:
 		return
 	physics_steps += 1
 	clock += dt
+	if ambience != null:
+		ambience.advance(dt)
 	if hitstop > 0:
 		for action in ["attack", "heavy", "jump", "dodge"]:
 			if command.get(action, false):

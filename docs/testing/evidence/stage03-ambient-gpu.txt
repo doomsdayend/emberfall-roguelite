@@ -1,0 +1,4 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+OpenGL API 3.3.0 - Build 32.0.101.6881 - Compatibility - Using Device: Intel - Intel(R) Graphics
+
+GPU_CAPTURE_RESULT={"display":"Windows","frames":36,"gpu":"Intel(R) Graphics","main_window_minimized":true,"passed":true,"sample_hz":12}

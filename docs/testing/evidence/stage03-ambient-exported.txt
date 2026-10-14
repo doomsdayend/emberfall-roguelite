@@ -1,0 +1,3 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PROTOTYPE_RESULT={"checks":697,"combat_flows":10,"failures":[],"fixture_flows":10,"gpu_tested":false,"human_playtested":false,"motion_samples":[{"distance_1s":446.000305175781,"input_sample_hz":30,"long_jump":205.537414550781,"short_jump":35.884521484375},{"distance_1s":446.000305175781,"input_sample_hz":60,"long_jump":205.537414550781,"short_jump":35.884521484375},{"distance_1s":446.000305175781,"input_sample_hz":120,"long_jump":205.537414550781,"short_jump":35.884521484375}],"passed":true,"physics_hz":120,"published":false,"room_restarts":20,"suite":"fixed-room-prototype"}
