@@ -28,6 +28,25 @@ func capture_all() -> void:
 	await capture("settings")
 	game.start_run()
 	await capture("refuge")
+	if game.art_slice_preview and not game.stage3_slice:
+		game.player.visual.override_remaining = 0
+		game.player.state = "idle"
+		await capture("idle_corrected")
+		game.player.facing = -1
+		await capture("idle_corrected_left")
+		game.player.facing = 1
+		for action in range(5):
+			game.player.start_attack(action)
+			var spec: Dictionary = preload("res://game/action_data.gd").ATTACKS[action]
+			var times := [0.0, spec.startup * 0.65, spec.startup, spec.startup + spec.active * 0.5, spec.startup + spec.active, spec.total - 0.01]
+			for frame in range(times.size()):
+				game.player.timer = times[frame]
+				await capture("action_%d_%d" % [action, frame])
+		game.player.start_attack(0)
+		for frame in range(36):
+			game.player.timer = float(frame) / 35.0 * 0.30
+			await capture("slash_motion_%02d" % frame)
+		game.player.state = "idle"
 	if game.stage3_slice:
 		game.load_room(3, 100)
 		game.resume()

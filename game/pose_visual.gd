@@ -141,6 +141,15 @@ func _draw() -> void:
 		body_angle = -PI / 2
 		torso.y = -46
 		pelvis.y = -24
+	if actor.get("kind") == null and state in ["idle", "run", "attack"]:
+		var pose := preload("res://game/player_pose.gd").sample(state, clock, actor.timer, actor.attack_index)
+		torso = pose.torso
+		pelvis = pose.pelvis
+		front_foot = pose.front_foot
+		rear_foot = pose.rear_foot
+		hand = pose.hand
+		offhand = pose.offhand
+		blade_angle = pose.blade
 	var tint := Color("46505e")
 	if actor.get("kind") == "archer":
 		tint = Color("5c715b")

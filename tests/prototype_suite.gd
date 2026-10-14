@@ -36,6 +36,7 @@ func run(game: Node) -> void:
 	if world.art_slice_preview:
 		await test_skin_binding()
 		await test_enemy_skin_readability()
+		test_player_pose_keys()
 	await test_flow()
 	await test_combat_flows()
 	var result := {"suite": "fixed-room-prototype", "passed": failures.is_empty(), "checks": checks,
@@ -69,6 +70,22 @@ func test_skin_binding() -> void:
 	var chain: Array = skin.bend(Vector2.ZERO, Vector2(100, 0), 16, 16, 1)
 	check(is_equal_approx(chain[0].length(), 16) and is_equal_approx(chain[0].distance_to(chain[1]), 16), "unreachable hand target keeps fixed arm lengths")
 	check(world.player.body_shape.shape.height == 96 and world.player.body_shape.shape.radius == 16, "skin keeps original collision capsule")
+
+func test_player_pose_keys() -> void:
+	var library = preload("res://game/player_pose.gd")
+	var idle: Dictionary = library.sample("idle", 0.0, 0.0, 0)
+	check(idle.pelvis.y < -53, "standing pelvis avoids persistent crouch")
+	check(absf(idle.front_foot.y - idle.rear_foot.y) < 0.01, "idle feet share ground plane")
+	for index in range(5):
+		var spec: Dictionary = preload("res://game/action_data.gd").ATTACKS[index]
+		var early: Dictionary = library.sample("attack", 0.0, 0.0, index)
+		var wind: Dictionary = library.sample("attack", 0.0, spec.startup * 0.9, index)
+		var active: Dictionary = library.sample("attack", 0.0, spec.startup + spec.active, index)
+		var end: Dictionary = library.sample("attack", 0.0, spec.total, index)
+		check(early.hand.distance_to(wind.hand) > 10, "attack wind-up visibly moves before active window")
+		check(wind.hand.distance_to(active.hand) > 20, "attack has distinct active sweep")
+		check(active.torso.distance_to(wind.torso) > 6, "torso drives attack with arm")
+		check(end.hand.distance_to(idle.hand) < 0.01, "attack returns smoothly to resting grip")
 
 func test_enemy_skin_readability() -> void:
 	await reset(2)
