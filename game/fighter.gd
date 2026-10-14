@@ -20,6 +20,7 @@ var body_shape: CollisionShape2D
 var visual: Node2D
 var debug_view := false
 var frozen := false
+var damage_bonus := 0
 
 func _ready() -> void:
 	collision_layer = 4
@@ -132,7 +133,7 @@ func advance_attack(dt: float, enemies: Array) -> void:
 				continue
 			if attack_rect().intersects(enemy.hurt_rect()):
 				targets_hit[enemy.get_instance_id()] = true
-				if enemy.take_damage(spec.damage, facing * spec.knock):
+				if enemy.take_damage(spec.damage + damage_bonus, facing * spec.knock):
 					hit_landed.emit(enemy, attack_index == 2 or attack_index == 3)
 	if timer >= spec.total:
 		if attack_buffer > 0 and attack_index < 2 and is_on_floor():

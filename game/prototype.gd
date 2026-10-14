@@ -2,7 +2,7 @@ extends Node2D
 const Fighter = preload("res://game/fighter.gd")
 const Enemy = preload("res://game/enemy.gd")
 const Router = preload("res://game/input_router.gd")
-const ROOMS := ["避难所", "训练场", "铸坊一层", "铸坊二层", "守门者"]
+const ROOMS := ["避难所", "训练场", "铸坊一层", "铸坊二层", "熔渣桥", "奖励炉台", "精英闸门", "窑炉守门者"]
 const UI_FONT = preload("res://assets/fonts/NotoSansSC.ttf")
 const Settings = preload("res://game/settings_store.gd")
 var mode := "title"
@@ -32,10 +32,13 @@ var pending_command: Dictionary = {}
 var settings := Settings.new()
 var settings_status := ""
 var art_slice_preview := false
+var stage3_slice := false
+var boon_id := ""
 
 func _ready() -> void:
 	test_mode = "--prototype-test" in OS.get_cmdline_user_args()
 	art_slice_preview = "--art-slice-preview" in OS.get_cmdline_user_args()
+	stage3_slice = "--stage3-slice" in OS.get_cmdline_user_args()
 	if test_mode or "--gpu-test" in OS.get_cmdline_user_args():
 		settings.path = "user://automated-tests/test-preferences.cfg"
 	settings.load_values()
@@ -61,6 +64,8 @@ func _ready() -> void:
 	tone.stream = generator
 	add_child(tone)
 	show_menu("title")
+	if "--stage3-test" in OS.get_cmdline_user_args():
+		call_deferred("run_stage3_tests")
 	if test_mode:
 		call_deferred("run_tests")
 
@@ -189,16 +194,32 @@ func load_room(index: int, health: int = 100) -> void:
 	player.debug_view = debug_view
 	player.hit_landed.connect(on_hit)
 	player.action_event.connect(on_action)
-	if room == 1:
-		spawn_enemy("pursuer", Vector2(680, 615), false, true)
-	elif room == 2:
-		spawn_enemy("pursuer", Vector2(700, 615))
-		spawn_enemy("archer", Vector2(1060, 560))
-	elif room == 3:
-		spawn_enemy("archer", Vector2(720, 615))
-		spawn_enemy("pursuer", Vector2(1020, 580))
-	elif room == 4:
-		spawn_enemy("pursuer", Vector2(820, 615), true)
+	if stage3_slice:
+		if room == 1:
+			spawn_enemy("pursuer", Vector2(680, 615), false, true)
+		elif room == 2:
+			spawn_enemy("pursuer", Vector2(700, 615)); spawn_enemy("archer", Vector2(1060, 560))
+		elif room == 3:
+			spawn_enemy("dasher", Vector2(850, 615)); spawn_enemy("archer", Vector2(1050, 560))
+		elif room == 4:
+			spawn_enemy("pursuer", Vector2(720, 615)); spawn_enemy("dasher", Vector2(980, 615))
+		elif room == 5:
+			pass
+		elif room == 6:
+			spawn_enemy("pursuer", Vector2(820, 615), true)
+		elif room == 7:
+			spawn_enemy("kilnwarden", Vector2(900, 615), true)
+	else:
+		if room == 1:
+			spawn_enemy("pursuer", Vector2(680, 615), false, true)
+		elif room == 2:
+			spawn_enemy("pursuer", Vector2(700, 615))
+			spawn_enemy("archer", Vector2(1060, 560))
+		elif room == 3:
+			spawn_enemy("archer", Vector2(720, 615))
+			spawn_enemy("pursuer", Vector2(1020, 580))
+		elif room == 4:
+			spawn_enemy("pursuer", Vector2(820, 615), true)
 	router.barrier()
 	queue_redraw()
 	update_hud()
@@ -313,7 +334,14 @@ func interact() -> bool:
 				on_action("interact", player.attack_instance)
 	if mode != "play" or player.position.distance_to(Vector2(1190, 620)) > 100 or not room_clear():
 		return false
-	if room == 4:
+	if stage3_slice and room == 5 and room_clear():
+		boon_id = ["heated_edge", "ash_step", "slag_needle", "smelter_heart"][completed_runs % 4]
+		if boon_id == "heated_edge": player.damage_bonus += 4
+		elif boon_id == "ash_step": player.dodge_cooldown = minf(player.dodge_cooldown, 0.65)
+		elif boon_id == "smelter_heart": player.hp = mini(112, player.hp + 12)
+		load_room(room + 1, player.hp)
+		return true
+	if (stage3_slice and room == 7) or (not stage3_slice and room == 4):
 		completed_runs += 1
 		show_menu("win")
 	else:
@@ -373,6 +401,11 @@ func _draw() -> void:
 
 func run_tests() -> void:
 	var suite := preload("res://tests/prototype_suite.gd").new()
+	add_child(suite)
+	await suite.run(self)
+
+func run_stage3_tests() -> void:
+	var suite := preload("res://tests/stage3_runtime_suite.gd").new()
 	add_child(suite)
 	await suite.run(self)
 
