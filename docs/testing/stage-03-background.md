@@ -16,3 +16,5 @@ pwsh -File tools/capture-prototype.ps1 -Godot .tools/godot/Godot_v4.6.3-stable_w
 证据：evidence/stage03-source-default.txt、stage03-source-skin.txt、stage03-exported-default.txt、stage03-exported-skin.txt、stage03-gpu-background.txt。引擎模板、生成API地址和凭据不入库。独立预览包保存在本地builds/windows/测试 空格/emberfall-art-preview.exe和同名pck；加 `-- --art-slice-preview` 启用美术候选。
 
 尚待：贴图杂色和关节遮盖修复、完整动作与握持慢放检查、正式骨骼生产绑定、环境分层动态、其他敌人/精英/三招二阶段首领/房间增益、真人阶段3质量验收与正式发布。只记录实际自动化和静帧审核结果。
+
+追击者运行时预览新增一张 RGBA 裁切候选，离屏夹具现保存27张1280×720截图，覆盖追击者预警、攻击、受击和死亡状态。它保持原有碰撞体、生命值、攻击窗口和AI；参考阴影、单视图与最终分层/许可仍待处理。

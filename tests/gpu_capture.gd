@@ -41,6 +41,19 @@ func capture_all() -> void:
 		await capture(pose)
 	game.load_room(2)
 	game.resume()
+	var pursuer = game.enemies[0]
+	pursuer.state = "telegraph"
+	pursuer.timer = 0.20
+	await capture("pursuer_telegraph")
+	pursuer.state = "attack"
+	pursuer.timer = 0.08
+	await capture("pursuer_attack")
+	pursuer.state = "hurt"
+	pursuer.timer = 0.05
+	await capture("pursuer_hurt")
+	pursuer.state = "death"
+	pursuer.timer = 0.22
+	await capture("pursuer_death")
 	game.player.position = Vector2(570, 620)
 	game.player.start_attack(0)
 	game.player.timer = 0.03

@@ -45,3 +45,4 @@ Noto Sans SC变量字体：Google Fonts官方分发，Copyright 2014–2021 Adob
 | docs/testing/evidence/stage03-art-slice-gpu-contact.png | Windows Intel Graphics/OpenGL 离屏截图拼板；tools/make_stage03_gpu_contact.py | 皮肤预览接入检查 | 验证证据，不是运行时资源 |
 
 尺寸、SHA256及状态见 assets/source/stage03-art-manifest.json。生成图不会直接作为最终游戏资产；阶段 3 仍需人工分层、透明边界、来源复核和离屏接入验收。
+| exported/foundry-pursuer-v01.png | 授权追击者参考的离线透明裁切；保留参考阴影，提示词见 docs/design/prompt-stage03-pursuer-sheet.txt | 近战追击者显式预览候选 | 已接入四状态离屏检查，未完成分层/多视图/许可验收 |

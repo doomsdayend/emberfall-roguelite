@@ -8,9 +8,18 @@ var previous_facing := 1.0
 var skin_preview: Node2D
 
 func _ready() -> void:
+	if "--art-slice-preview" in OS.get_cmdline_user_args():
+		call_deferred("_setup_skin_preview")
+
+func _setup_skin_preview() -> void:
 	var actor = get_parent()
-	if "--art-slice-preview" in OS.get_cmdline_user_args() and actor.get("kind") == null:
+	if not is_instance_valid(actor) or skin_preview != null:
+		return
+	if actor.get("kind") == null:
 		skin_preview = preload("res://game/skin_preview.gd").new()
+	elif actor.get("kind") == "pursuer":
+		skin_preview = preload("res://game/enemy_skin_preview.gd").new()
+	if skin_preview != null:
 		add_child(skin_preview)
 
 func set_pose(pose: String, duration: float) -> void:
@@ -149,7 +158,10 @@ func _draw() -> void:
 	hand += offset
 	offhand += offset
 	if skin_preview != null:
-		skin_preview.apply_pose(torso, pelvis, front_foot, rear_foot, hand, offhand, blade_angle, body_angle, facing, clock)
+		if actor.get("kind") == "pursuer":
+			skin_preview.apply_pose(state, facing, actor.timer, actor.hp > 0)
+		else:
+			skin_preview.apply_pose(torso, pelvis, front_foot, rear_foot, hand, offhand, blade_angle, body_angle, facing, clock)
 		return
 	# Separate limbs bend at knees/elbows; no static box standing in for motion.
 	limb(pelvis, (pelvis + rear_foot) * 0.5 + Vector2(-8, -2), rear_foot, tint.darkened(0.25), 10)

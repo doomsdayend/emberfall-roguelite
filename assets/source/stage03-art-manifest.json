@@ -67,6 +67,15 @@
       "status": "runtime_backdrop_candidate",
       "created": "2026-10-13",
       "source": "user-authorized imagegen CLI edit, gpt-image-2"
+    },
+    {
+      "path": "assets/exported/foundry-pursuer-v01.png",
+      "width": 452,
+      "height": 786,
+      "sha256": "a8e02a5f035ba6d9b56413675992df61f851f88adca63dd9110c5ca294808c9c",
+      "status": "runtime_enemy_preview_candidate",
+      "created": "2026-10-14",
+      "source": "offline crop from authorized pursuer reference; shadows reviewed separately"
     }
   ]
 }
