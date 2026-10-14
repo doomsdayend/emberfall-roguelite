@@ -21,4 +21,6 @@ pwsh -File tools/capture-prototype.ps1 -Godot .tools/godot/Godot_v4.6.3-stable_w
 
 `--stage3-slice --stage3-test` 源码运行时套件已通过：8 个房间可加载，三类敌人、精英和窑炉守门者首领存在，首领生命与阶段字段有效。独立 Windows 导出包的常规 256/672 项回归和导出检查通过；Stage 3 运行时套件当前记录为源码验证，仍需在试玩包中人工连续走完 8 房间并完成真人平衡验收。
 
+Windows Intel/OpenGL 最小化离屏夹具新增 `-Stage3` 模式，覆盖位移敌人房、奖励炉台、精英闸门和首领第一阶段/熔渣线/冲锋状态；结果为 `GPU_STAGE3_RESULT passed=true`，审核拼板见 [stage03-runtime-gpu-contact.png](evidence/stage03-runtime-gpu-contact.png)，原始日志见 [stage03-runtime-gpu.txt](evidence/stage03-runtime-gpu.txt)。
+
 追击者运行时预览新增一张 RGBA 裁切候选，离屏夹具现保存29张1280×720截图，覆盖追击者预警、攻击、受击和死亡状态。它保持原有碰撞体、生命值、攻击窗口和AI；参考阴影、单视图与最终分层/许可仍待处理。

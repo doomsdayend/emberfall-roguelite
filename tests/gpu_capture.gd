@@ -28,6 +28,39 @@ func capture_all() -> void:
 	await capture("settings")
 	game.start_run()
 	await capture("refuge")
+	if game.stage3_slice:
+		game.load_room(3, 100)
+		game.resume()
+		await capture("stage3_dasher_room")
+		var dasher = game.enemies[0]
+		dasher.state = "telegraph"
+		dasher.timer = 0.20
+		await capture("stage3_dasher_telegraph")
+		dasher.state = "attack"
+		dasher.timer = 0.12
+		await capture("stage3_dasher_attack")
+		game.load_room(5, 100)
+		game.resume()
+		await capture("stage3_reward_room")
+		game.load_room(6, 100)
+		game.resume()
+		await capture("stage3_elite_room")
+		game.load_room(7, 100)
+		game.resume()
+		var boss = game.enemies[0]
+		boss.state = "telegraph"
+		boss.timer = 0.30
+		await capture("stage3_boss_phase1")
+		boss.hp = 180
+		boss.state = "boss_slag"
+		boss.timer = 0.30
+		await capture("stage3_boss_phase2_slag")
+		boss.state = "boss_charge"
+		boss.timer = 0.30
+		await capture("stage3_boss_phase2_charge")
+		print("GPU_STAGE3_RESULT=" + JSON.stringify({"passed": not failed, "rooms": 8, "boss_states": 3, "display": DisplayServer.get_name(), "gpu": RenderingServer.get_video_adapter_name()}))
+		quit(1 if failed or root.mode != Window.MODE_MINIMIZED else 0)
+
 	game.player.state = "run"
 	game.player.visual.override_remaining = 0
 	game.player.visual.clock = 0.08
@@ -106,7 +139,7 @@ func capture(label: String) -> void:
 	await process_frame
 	RenderingServer.force_draw(false)
 	var screenshot := viewport.get_texture().get_image()
-	var directory := "res://artifacts/gpu-art-slice" if game.art_slice_preview else "res://artifacts/gpu"
+	var directory := "res://artifacts/gpu-stage3" if game.stage3_slice else ("res://artifacts/gpu-art-slice" if game.art_slice_preview else "res://artifacts/gpu")
 	var path := directory + "/" + label + ".png"
 	DirAccess.make_dir_recursive_absolute(directory)
 	if screenshot == null or screenshot.is_empty() or screenshot.get_size() != Vector2i(1280, 720):
